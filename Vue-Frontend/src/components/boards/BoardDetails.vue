@@ -2,8 +2,8 @@
   <section class="container">
     <article class="row">
       <header class="col-12">
-        <h2></h2>
-        <p>1</p>
+        <h2>{{ board.title }}</h2>
+        <p>{{ board.description }}</p>
         <a
           href="/board/<?php echo urlencode($board->getBoardId());?>/thread/createthread"
           class="btn btn-primary"
@@ -20,7 +20,8 @@ import axios from '../../axios-auth'
 export default {
   name: 'BoardDetails',
   props: {
-    board_name: String
+    board_name: String,
+    thread: Object
   },
   data() {
     return {
@@ -40,7 +41,15 @@ export default {
       axios
         .get(`/board/${this.board_name}`)
         .then((response) => {
-          this.board = response.data
+          this.board = response.data;
+          axios
+            .get(`/board/${this.board_name}/threads`)
+            .then((response) => {
+              this.threads = response.data
+            })
+            .catch((error) => {
+              console.log(error)
+            })
         })
         .catch((error) => {
           console.log(error)

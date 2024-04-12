@@ -2,15 +2,21 @@
   <a
     :href="`/board/${board.board_id}`"
     class="clickable-card"
-    @click.prevent="viewType === 'list' ? goToBoard() : null"
+    data-bs-toggle="tooltip" data-placement="right" :title="board.board_description"
+    @click.prevent="goToBoard"
   >
     <section class="card">
-      <article class="card-body">
+      <article class="card-body d-flex justify-content-between align-items-center">
         <h4 class="card-title">{{ board.board_name }}</h4>
-        <section v-if="viewType === 'list'">
-          <p class="card-text">{{ board.board_description }}</p>
-          <small class="card-subtitle mb-2 text-muted">{{ board.total_threads }}</small>
-          <small class="card-subtitle mb-2 text-muted">{{ board.total_messages }}</small>
+        <section class="d-flex">
+          <dl class="d-flex flex-column align-items-center border-end border-secondary">
+            <dt>{{ board.total_threads }}</dt>
+            <dd><small class="card-subtitle mb-2 text-muted">Threads</small></dd>
+          </dl>
+          <dl class="d-flex flex-column align-items-center">
+            <dt>{{ board.total_messages }}</dt>
+            <dd><small class="card-subtitle mb-2 text-muted">Messages</small></dd>
+          </dl>
         </section>
       </article>
     </section>
@@ -21,10 +27,6 @@ export default {
   name: 'BoardItem',
   props: {
     board: Object,
-    viewType: {
-      type: String,
-      default: 'list'
-    }
   },
   mounted() {},
   methods: {
@@ -34,3 +36,14 @@ export default {
   }
 }
 </script>
+<style scoped>
+a {
+  text-decoration: none;
+  color: #E30380;
+}
+dl{
+  padding-right: 2em;
+  padding-left: 2em;
+  margin: 0;
+}
+</style>

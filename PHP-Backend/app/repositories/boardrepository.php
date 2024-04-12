@@ -56,7 +56,6 @@ class BoardRepository extends Repository
                 return $boardId;
 
         }
-
         function insert($board)
         {
                 $stmt = $this->connection->prepare("INSERT into boards (board_name, board_description) VALUES (:boardName, :boardDescription)");
@@ -65,5 +64,17 @@ class BoardRepository extends Repository
 
                 $stmt->execute([$board->getBoardName()]);
 
+        }
+        function updatePostCount($boardid)
+        {
+                $stmt = $this->connection->prepare("UPDATE boards SET total_messages = total_messages + 1 WHERE board_id = :board_id");
+                $stmt->bindParam(':board_id', $boardid);
+                $stmt->execute();
+        }
+        function updateThreadCount($boardId)
+        {
+                $stmt = $this->connection->prepare("UPDATE boards SET total_threads = total_threads + 1 WHERE board_id = :board_id");
+                $stmt->bindParam(':board_id', $boardId);
+                $stmt->execute();
         }
 }

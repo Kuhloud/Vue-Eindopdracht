@@ -1,23 +1,23 @@
 <template>
   <section>
-    <div class="container">
-      <h2 class="mt-3 mt-lg-5">Products</h2>
-      <div class="row mt-3">
+    <section class="container">
+      <h2 class="mt-3 mt-lg-5">Discussie</h2>
+      <section class="row mt-3">
         <board-item
           v-for="board in boards"
           :key="board.board_id"
           :board="board"
+          viewType="list"
           @update="update"
           @click="goToBoard(board.board_name)"
         />
-      </div>
-    </div>
+      </section>
+    </section>
   </section>
 </template>
 
 <script>
 import axios from '../../axios-auth'
-
 import BoardItem from './BoardItem.vue'
 
 export default {
@@ -51,4 +51,12 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.clickable-card {
+    text-decoration: none; 
+}
+.clickable-card:hover {
+    /* Styling for hover state, e.g., change background color, add a shadow, etc. */
+    background-color: #E30380;
+}
+</style>

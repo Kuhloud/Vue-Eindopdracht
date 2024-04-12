@@ -51,4 +51,8 @@ class BoardController extends Controller {
         
 
     }
+    public function updateThreadCount($id) {
+        $board = $this->boardService->updateThreadCount($id);
+        $this->respond($board);
+    }
 }

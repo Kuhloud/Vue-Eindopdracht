@@ -18,7 +18,6 @@ class ThreadController extends Controller {
         $threadId = $_SESSION['thread_id'];
         $thread = $this->threadService->getThreadById($threadId);
         $this->currentThread($thread);
-        $this->displayView($thread);
     }
     function currentThread($thread)
     {
