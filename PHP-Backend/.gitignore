@@ -9,3 +9,5 @@
 # Vendor
 app/vendor/
 app/views/
+# .env
+.env
