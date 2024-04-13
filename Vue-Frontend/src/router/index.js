@@ -5,7 +5,7 @@ import BoardList from '../components/board/BoardList.vue'
 import BoardDetails from '../components/board/BoardDetails.vue'
 import ThreadDetails from '../components/thread/ThreadDetails.vue'
 import Login from '../components/registration/Login.vue'
-// import Registrate from '../components/registration/Registrate.vue'
+import Signup from '../components/registration/Signup.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,8 +14,8 @@ const router = createRouter({
     { path: '/boards', component: BoardList },
     { path: '/board/:board_name', component: BoardDetails, props: true },
     { path: '/thread/:thread_title', component: ThreadDetails, props: true },
-    { path: '/login', component: Login }
-    // { path: '/signup', component: Registrate }
+    { path: '/login', component: Login },
+    { path: '/signup', component: Signup }
   ]
 })
 

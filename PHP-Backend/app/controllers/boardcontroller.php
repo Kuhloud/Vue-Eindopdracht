@@ -48,11 +48,9 @@ class BoardController extends Controller {
 
         // $threads = $this->threadService->getThreads($board->getId());
         // $this->displayView($threads);
-        
-
     }
     public function updateThreadCount($id) {
-        $board = $this->boardService->updateThreadCount($id);
-        $this->respond($board);
+        $this->boardService->updateThreadCount($id);
+        // $this->respond($board);
     }
 }

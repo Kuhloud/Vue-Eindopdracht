@@ -23,7 +23,11 @@ class BoardService {
         $boardId = $repository->getBoardByName($boardName);
         return $boardId;
     }
-
+    public function updateThreadCount($boardId) {
+        // retrieve data
+        $repository = new BoardRepository();
+        $repository->updateThreadCount($boardId);
+    }
     public function insert($board) {
         // retrieve data
         $repository = new BoardRepository();

@@ -22,10 +22,7 @@ export const userStore = defineStore('store', {
           })
           .then((res) => {
             console.log(res.data)
-            localStorage['token'] = res.data
-            localStorage.setItem('username', username)
-            this.username = username
-            this.token = res.data
+            this.setUserData(res, username)
             resolve()
           })
           .catch((error) => reject(error.response.data.errorMessage))
@@ -41,14 +38,18 @@ export const userStore = defineStore('store', {
           })
           .then((res) => {
             console.log(res.data)
-            localStorage['token'] = res.data
-            localStorage.setItem('username', username)
-            this.username = username
-            this.token = res.data
+            this.setUserData(res, username)
             resolve()
           })
           .catch((error) => reject(error.response.data.errorMessage))
       })
+    },
+    setUserData(response, username)
+    {
+      localStorage['token'] = response.data
+      localStorage.setItem('username', username)
+      this.username = username
+      this.token = response.data
     },
     autologin() {
       if (localStorage['token']) {
@@ -57,8 +58,12 @@ export const userStore = defineStore('store', {
         axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
       }
     },
-    sanitize(username, email, password) {
-
+    logout() {
+      this.token = ''
+      this.username = ''
+      localStorage.removeItem('token')
+      localStorage.removeItem('username')
+      axios.defaults.headers.common['Authorization'] = ''
     }
   }
 })

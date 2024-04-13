@@ -34,7 +34,7 @@
   import { userStore } from '../../stores/userStore'
   
   export default {
-    name: 'LoginComponent',
+    name: 'SignupComponent',
     setup() {
       const store = userStore()
       return { store }
