@@ -1,19 +1,20 @@
 <template>
-  <section>
     <section class="container">
-      <h2 class="mt-3 mt-lg-5">Discussie</h2>
-      <section class="row mt-3">
-        <board-item
+      <article class="row">
+        <header class="col-12">
+            <h2>Boards</h2>
+            <p>Discussies hier</p>
+        </header>
+    </article>
+    </section>
+    <section>
+      <board-item
           v-for="board in boards"
           :key="board.board_id"
           :board="board"
-          viewType="list"
           @update="update"
-          @click="goToBoard(board.board_name)"
         />
-      </section>
     </section>
-  </section>
 </template>
 
 <script>
@@ -43,9 +44,6 @@ export default {
         .catch((error) => {
           console.log(error)
         })
-    },
-    goToBoard(board_name) {
-      this.$router.push(`/board/${board_name}`)
     }
   }
 }

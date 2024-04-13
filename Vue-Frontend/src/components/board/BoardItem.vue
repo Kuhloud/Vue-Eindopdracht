@@ -1,9 +1,9 @@
 <template>
   <a
-    :href="`/board/${board.board_id}`"
+    :href="`/board/${board.board_name}`"
     class="clickable-card"
     data-bs-toggle="tooltip" data-placement="right" :title="board.board_description"
-    @click.prevent="goToBoard"
+    @click.prevent="goToBoard(board.board_name)"
   >
     <section class="card">
       <article class="card-body d-flex justify-content-between align-items-center">
@@ -28,10 +28,9 @@ export default {
   props: {
     board: Object,
   },
-  mounted() {},
   methods: {
-    goToBoard() {
-      this.$emit('click')
+    goToBoard(board_name) {
+      this.$router.push(`/board/${board_name}`);
     }
   }
 }

@@ -15,6 +15,11 @@ class UserService {
     public function checkUsernamePassword($username, $password) {
         return $this->repository->checkUsernamePassword($username, $password);
     }
+    public function checkIfEmail($usernameData) {
+        $sanitizedUsername = filter_var($usernameData, FILTER_SANITIZE_EMAIL);
+        if (filter_var($usernameData, FILTER_VALIDATE_EMAIL)) {
+            return $sanitizedUsername;
+        }
+        return filter_var($usernameData, FILTER_SANITIZE_STRING);
+    }
 }
-
-?>

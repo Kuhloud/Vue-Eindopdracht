@@ -19,11 +19,11 @@ class ThreadRepository extends Repository
                 return $threads;
 
         }
-        function getThreadsByBoardId($boardId)
+        function getThreadsByBoardName($board_name)
         {
 
-                $stmt = $this->connection->prepare("SELECT * FROM threads WHERE board_id = :board_id");
-                $stmt->bindParam(':board_id', $boardId);
+                $stmt = $this->connection->prepare("SELECT * FROM threads WHERE board_id IN (SELECT board_id FROM boards WHERE board_name = :board_name)");
+                $stmt->bindParam(':board_name', $board_name);
                 $stmt->execute();
 
                 $stmt->setFetchMode(PDO::FETCH_CLASS, 'Thread');
@@ -31,6 +31,18 @@ class ThreadRepository extends Repository
 
                 return $threads;
 
+        }
+        function getThreadByTitle($title)
+        {
+
+                $stmt = $this->connection->prepare("SELECT * FROM threads WHERE title = :title");
+                $stmt->bindParam(':title', $title);
+                $stmt->execute();
+
+                $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\Thread');
+                $threads = $stmt->fetch();
+
+                return $threads;
         }
         function getThreadById($threadId)
         {
@@ -56,9 +68,9 @@ class ThreadRepository extends Repository
                 $stmt->execute();
                 return $this->connection->lastInsertId();
         }
-        function updatePostCount($threadId)
+        function updateReplies($threadId)
         {
-                $stmt = $this->connection->prepare("UPDATE threads SET post_count = post_count + 1 WHERE thread_id = :thread_id");
+                $stmt = $this->connection->prepare("UPDATE threads SET replies = replies + 1 WHERE thread_id = :thread_id");
                 $stmt->bindParam(':thread_id', $threadId);
                 $stmt->execute();
         }

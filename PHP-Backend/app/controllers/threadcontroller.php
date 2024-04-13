@@ -32,4 +32,12 @@ class ThreadController extends Controller {
         // Retrieve the previous URL
         require __DIR__ . "/../views/thread/createthread.php";
     }
+    public function getThreadsByBoardName($name) {
+        $threads = $this->threadService->getThreadsByBoardName($name);
+        $this->respond($threads);
+    }
+    public function getThreadByTitle($title) {
+        $threads = $this->threadService->getThreadByTitle($title);
+        $this->respond($threads);
+    }
 }

@@ -9,10 +9,10 @@ class ThreadService {
         $repository = new ThreadRepository();
         return $repository->getAllThreads();
     }
-    public function getThreadsByBoardId($boardId) {
+    public function getThreadsByBoardName($board_name) {
         // retrieve data
         $repository = new ThreadRepository();
-        $threads = $repository->getThreadsByBoardId($boardId);
+        $threads = $repository->getThreadsByBoardName($board_name);
         return $threads;
     }
     public function getThreadById($threadId) {
@@ -21,17 +21,22 @@ class ThreadService {
         $thread = $repository->getThreadById($threadId);
         return $thread;
     }
+    public function getThreadByTitle($title) {
+        // retrieve data
+        $repository = new ThreadRepository();
+        $threads = $repository->getThreadByTitle($title);
+        return $threads;
+    }
 
     public function insert($thread) {
         // retrieve data
         $repository = new ThreadRepository();
-        $threadId = $repository->insert($thread->getBoardId(), $thread->getTitle(), $thread->getFirstPost(), $thread->getUserId());  
-        $this->updatePostCount($threadId);   
+        $threadId = $repository->insert($thread->getBoardId(), $thread->getTitle(), $thread->getFirstPost(), $thread->getUserId());    
         return $threadId;   
     }
-    public function updatePostCount($threadId) {
+    public function updateReplies($threadId) {
         // retrieve data
         $repository = new ThreadRepository();
-        $repository->updatePostCount($threadId);
+        $repository->updateReplies($threadId);
     }
 }

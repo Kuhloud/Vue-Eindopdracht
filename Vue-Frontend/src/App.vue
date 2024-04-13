@@ -1,10 +1,10 @@
 <template>
-  <navigation />
+  <navigation-bar />
   <router-view />
 </template>
 
 <script>
-import Navigation from './components/Navigation.vue'
+import NavigationBar from './components/NavigationBar.vue'
 import { useStore } from './stores/store'
 
 export default {
@@ -15,7 +15,7 @@ export default {
     return { store }
   },
   components: {
-    Navigation
+    NavigationBar
   }
 }
 </script>

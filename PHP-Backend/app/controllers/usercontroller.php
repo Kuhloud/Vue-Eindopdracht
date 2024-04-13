@@ -15,14 +15,16 @@ class UserController extends Controller
         $this->userService = new UserService();
     }
 
+    // reminder to ask co-pilot to refine this method
     public function login() {
 
         // read user data from request body
         $logindata = $this->createObjectFromPostedJson("Models\User");
+        $resanitizedUsernameInput = $this->userService->checkIfEmail($logindata->username);
 
         // get user from db
         $user = $this->userService->checkUsernamePassword(
-            $logindata->username, 
+            $resanitizedUsernameInput, 
             $logindata->password);
 
         // if the method returned false, the username and/or password were incorrect
@@ -31,11 +33,16 @@ class UserController extends Controller
             return;
         }
 
+        $this->generateJwt($user);
+
+    }
+    function generateJwt($user)
+    {
         // generate jwt
-        $key = 'SendMeShekels';
+        $key = $_ENV['JWT_GENERATED_KEY'];
         $payload = [
-        'iss' => 'http://api/inholland.nl',
-        'aud' => 'http://www.inholland.nl',
+        'iss' => 'http://localhost:5173/',
+        'aud' => 'http://localhost/',
         'sub' => $user->username,
         'iat' => time(),
         'nbf' => time(),
@@ -45,6 +52,7 @@ class UserController extends Controller
 
         // return jwt
         $this->respond($jwt);
+
     }
     public function registrate()
     {

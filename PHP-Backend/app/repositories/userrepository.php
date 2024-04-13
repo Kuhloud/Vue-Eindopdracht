@@ -12,8 +12,9 @@ class UserRepository extends Repository
     {
         try {
             // retrieve the user with the given username
-            $stmt = $this->connection->prepare("SELECT id, username, password, email FROM user WHERE username = :username");
+            $stmt = $this->connection->prepare("SELECT * FROM users WHERE username = :username OR email = :email");
             $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':email', $username);
             $stmt->execute();
 
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\User');
@@ -33,7 +34,6 @@ class UserRepository extends Repository
             echo $e;
         }
     }
-
     // hash the password (currently uses bcrypt)
     function hashPassword($password)
     {

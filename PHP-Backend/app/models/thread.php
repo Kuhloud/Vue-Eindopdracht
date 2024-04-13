@@ -7,7 +7,7 @@ private int $board_id;
 private int $user_id;
 private string $title;
 private string $first_post;
-private int $post_count;
+private int $replies;
 private string $created_at;
 
 public function jsonSerialize() : mixed {
@@ -45,7 +45,8 @@ public function setFirstPost(string $first_post) {
 public function getFirstPost() {
     return $this->first_post;
 }
-public function getPostCount() {
-    return $this->post_count;
+public function getReplies() {
+    return $this->replies
+;
 }
 }

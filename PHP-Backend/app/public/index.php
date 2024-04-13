@@ -8,6 +8,10 @@ ini_set("display_errors", 1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
+// Load .env file
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 // Create Router instance
 $router = new \Bramus\Router\Router();
 
@@ -17,12 +21,11 @@ $router->setNamespace('Controllers');
 $router->get('/boards', 'BoardController@getBoards');
 $router->get('/board/([^/]+)', 'BoardController@getBoardByName');
 
-// routes for the categories endpoint
-$router->get('/categories', 'CategoryController@getAll');
-$router->get('/categories/(\d+)', 'CategoryController@getOne');
-$router->post('/categories', 'CategoryController@create');
-$router->put('/categories/(\d+)', 'CategoryController@update');
-$router->delete('/categories/(\d+)', 'CategoryController@delete');
+// routes for the thread endpoint
+$router->get('/board/([^/]+)/threads', 'ThreadController@getThreadsByBoardName');
+$router->get('/thread/([^/]+)', 'ThreadController@getThreadByTitle');
+
+// routes for the post endpoint
 
 // routes for the users endpoint
 $router->post('/users/login', 'UserController@login');

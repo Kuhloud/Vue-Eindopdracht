@@ -11,10 +11,11 @@ export const useStore = defineStore('store', {
   },
   actions: {
     login(username, password) {
+      const sanitizedUsername = username.trim()
       return new Promise((resolve, reject) => {
         axios
           .post('/users/login', {
-            username: username,
+            username: sanitizedUsername,
             password: password
           })
           .then((res) => {

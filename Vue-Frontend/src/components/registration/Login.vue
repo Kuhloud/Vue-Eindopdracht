@@ -1,25 +1,27 @@
 <template>
   <section>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
+    <section class="container">
+      <section class="row">
+        <section class="col-md-6">
           <form>
-            <div v-if="errorMessage != ''" class="alert alert-danger">
+            <section v-if="errorMessage != ''" class="alert alert-danger">
               {{ errorMessage }}
-            </div>
-            <div class="mb-3">
+            </section>
+            <section class="mb-3">
               <label for="inputUsername" class="form-label">Username</label>
               <input id="inputUsername" type="text" v-model="username" class="form-control" />
-            </div>
-            <div class="mb-3">
+              <small class="form-text text-muted">Required</small>
+            </section>
+            <section class="mb-3">
               <label for="inputPassword" class="form-label">Password</label>
               <input type="password" v-model="password" class="form-control" id="inputPassword" />
-            </div>
+              <small class="form-text text-muted">Required</small>
+            </section>
             <button type="button" class="btn btn-primary" @click="login">Submit</button>
           </form>
-        </div>
-      </div>
-    </div>
+        </section>
+      </section>
+    </section>
   </section>
 </template>
 
