@@ -15,7 +15,6 @@ class UserController extends Controller
         $this->userService = new UserService();
     }
 
-    // reminder to ask co-pilot to refine this method
     public function login() {
 
         // read user data from request body
@@ -23,7 +22,7 @@ class UserController extends Controller
         $resanitizedUsernameInput = $this->userService->checkIfEmail($logindata->username);
 
         // get user from db
-        $user = $this->userService->checkUsernamePassword(
+        $user = $this->userService->getUser(
             $resanitizedUsernameInput, 
             $logindata->password);
 
@@ -35,6 +34,32 @@ class UserController extends Controller
 
         $this->generateJwt($user);
 
+    }
+    public function signup()
+    {
+                // read user data from request body
+                $logindata = $this->createObjectFromPostedJson("Models\User");
+                if (!$this->userService->isValidEmail($logindata->email)) {
+                    $this->respondWithError(400, "Email is not valid");
+                    return;
+                }
+                if (!$logindata->username || !$logindata->password) {
+                    $this->respondWithError(400, "Enter Username and/or password");
+                    return;
+                }
+        
+                // get user from db
+                $this->userService->insert(
+                    $logindata->username,
+                    $logindata->email,
+                    $logindata->password);
+
+                    $user = $this->userService->getUser(
+                        $logindata->username, 
+                        $logindata->password);
+                    
+        
+                $this->generateJwt($user);
     }
     function generateJwt($user)
     {
@@ -53,9 +78,5 @@ class UserController extends Controller
         // return jwt
         $this->respond($jwt);
 
-    }
-    public function registrate()
-    {
-        
     }
 }

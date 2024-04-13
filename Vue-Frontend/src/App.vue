@@ -5,12 +5,12 @@
 
 <script>
 import NavigationBar from './components/NavigationBar.vue'
-import { useStore } from './stores/store'
+import { userStore } from './stores/userStore'
 
 export default {
   name: 'App',
   setup() {
-    const store = useStore()
+    const store = userStore()
     store.autologin()
     return { store }
   },

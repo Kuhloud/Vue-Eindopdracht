@@ -29,7 +29,7 @@ $router->get('/thread/([^/]+)', 'ThreadController@getThreadByTitle');
 
 // routes for the users endpoint
 $router->post('/users/login', 'UserController@login');
-$router->post('/users/signup', 'UserController@registrate');
+$router->post('/users/signup', 'UserController@signup');
 
 // Run it!
 $router->run();

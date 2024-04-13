@@ -14,7 +14,7 @@
               </section>
               <section class="mb-3">
                 <label for="inputPassword" class="form-label">Enter Email Address</label>
-                <input type="password" v-model="password" class="form-control" id="inputPassword" />
+                <input type="password" v-model="email" class="form-control" id="inputPassword" />
                 <small class="form-text text-muted">Required</small>
               </section>
               <section class="mb-3">
@@ -31,17 +31,18 @@
   </template>
   
   <script>
-  import { useStore } from '../../stores/store'
+  import { userStore } from '../../stores/userStore'
   
   export default {
     name: 'LoginComponent',
     setup() {
-      const store = useStore()
+      const store = userStore()
       return { store }
     },
     data() {
       return {
         username: '',
+        email: '',
         password: '',
         errorMessage: ''
       }
@@ -49,7 +50,7 @@
     methods: {
       login() {
         this.store
-          .login(this.username, this.password)
+          .signup(this.username, this.email, this.password)
           .then(() => {
             this.$router.replace('/')
           })

@@ -26,12 +26,12 @@
 </template>
 
 <script>
-import { useStore } from '../../stores/store'
+import { userStore } from '../../stores/userStore'
 
 export default {
   name: 'LoginComponent',
   setup() {
-    const store = useStore()
+    const store = userStore()
     return { store }
   },
   data() {

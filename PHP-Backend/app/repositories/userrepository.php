@@ -8,11 +8,11 @@ use Repositories\Repository;
 
 class UserRepository extends Repository
 {
-    function checkUsernamePassword($username, $password)
+    function getUser($username, $password)
     {
         try {
             // retrieve the user with the given username
-            $stmt = $this->connection->prepare("SELECT * FROM users WHERE username = :username OR email = :email");
+            $stmt = $this->connection->prepare("SELECT * FROM users WHERE LOWER(username) = LOWER(:username) OR LOWER(email) = LOWER(:email)");
             $stmt->bindParam(':username', $username);
             $stmt->bindParam(':email', $username);
             $stmt->execute();
@@ -24,8 +24,9 @@ class UserRepository extends Repository
             $result = $this->verifyPassword($password, $user->password);
 
             if (!$result)
+            {
                 return false;
-
+            }
             // do not pass the password hash to the caller
             $user->password = "";
 
@@ -34,10 +35,46 @@ class UserRepository extends Repository
             echo $e;
         }
     }
-    // hash the password (currently uses bcrypt)
-    function hashPassword($password)
+    function insert($username, $email, $hashedPassword)
     {
-        return password_hash($password, PASSWORD_DEFAULT);
+            $stmt = $this->connection->prepare("INSERT into users (username, email, password, joined_at) 
+            VALUES (:username, :email, :password, NOW())");
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':password', $hashedPassword);
+
+            try
+            {
+            $stmt->execute();
+            }
+            catch (PDOException $e)
+            {
+            echo "Error: " . $e->getMessage();
+            }
+
+    }
+    
+    function isExistingUsername($username) {
+        $stmt = $this->connection->prepare("SELECT username FROM users WHERE LOWER(username) = LOWER(:username)");
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        if ($stmt->fetchAll()) 
+        {
+                return true;
+        } else {
+                return false;
+        }
+}
+    function isExistingEmail($email){
+            $stmt = $this->connection->prepare("SELECT username FROM users WHERE LOWER(email) = LOWER(:email)");
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+            if ($stmt->fetchAll()) 
+            {
+                    return true;
+            } else {
+                    return false;
+            }
     }
 
     // verify the password hash
