@@ -65,7 +65,11 @@ class Controller
             if(is_object($value)) {
                 continue;
             }
-            $object->{$key} = $value;
+        // Convert the key to camelCase to match the setter method name
+        $method = 'set' . str_replace('_', '', ucwords($key, '_'));
+        if (method_exists($object, $method)) {
+            $object->{$method}($value);
+        }
         }
         return $object;
     }

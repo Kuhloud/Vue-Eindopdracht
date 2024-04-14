@@ -34,10 +34,15 @@ class UserService {
         if (filter_var($usernameData, FILTER_VALIDATE_EMAIL)) {
             return $sanitizedUsername;
         }
-        return filter_var($usernameData, FILTER_SANITIZE_STRING);
+        return htmlspecialchars($usernameData, ENT_QUOTES, 'UTF-8');
     }
     public function isValidEmail($email) {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
+    function getUserById($user_id)
+    {
+        $repository = new UserRepository();
+        return $repository->getUserById($user_id);
     }
     // // verify the password hash
     // function verifyPassword($input, $user)

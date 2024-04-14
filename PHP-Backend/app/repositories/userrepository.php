@@ -21,14 +21,14 @@ class UserRepository extends Repository
             $user = $stmt->fetch();
 
             // verify if the password matches the hash in the database
-            $result = $this->verifyPassword($password, $user->password);
+            $result = $this->verifyPassword($password, $user->getPassword());
 
             if (!$result)
             {
                 return false;
             }
             // do not pass the password hash to the caller
-            $user->password = "";
+            $user->setPassword("");
 
             return $user;
         } catch (PDOException $e) {
@@ -52,6 +52,22 @@ class UserRepository extends Repository
             echo "Error: " . $e->getMessage();
             }
 
+    }
+    function getUserById($user_id)
+    {
+        try {
+            // retrieve the user with the given username
+            $stmt = $this->connection->prepare("SELECT * FROM users WHERE user_id = :user_id");
+            $stmt->bindParam(':user_id', $user_id);
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\User');
+            $user = $stmt->fetch();
+
+            return $user;
+        } catch (PDOException $e) {
+            echo $e;
+        }
     }
     
     function isExistingUsername($username) {

@@ -1,25 +1,35 @@
 <template>
-  <nav id="navbar" class="navbar navbar-expand-md navbar-dark mb-4">
+  <nav id="navbar" class="navbar navbar-expand-lg sticky-top navbar-dark">
     <section>
       <a class="navbar-brand" href="/">
         <img id="logo" :src="img" title="Inholland University of Applied Sciences" alt="Inholland Logo" />
         InHolland Forum
       </a>
     </section>
-    <section class="container-fluid">
-      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+    <section class="collapse navbar-collapse d-flex justify-content-end">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <router-link to="/" class="nav-link" active-class="active">Home</router-link>
         </li>
         <li class="nav-item">
           <router-link to="/boards" class="nav-link" active-class="active">Boards</router-link>
         </li>
+        <section class="d-flex" v-if="!store.isLoggedIn">
         <li class="nav-item">
           <router-link to="/login" class="nav-link" active-class="active">Login</router-link>
         </li>
         <li class="nav-item">
           <router-link to="/signup" class="nav-link" active-class="active">Signup</router-link>
         </li>
+        </section>
+        <section class="d-flex" v-else>
+        <li class="nav-item">
+          <router-link to="/" class="nav-link" active-class="active">Welcome, {{ this.user.username }}</router-link>
+        </li>
+        <li class="nav-item">
+          <a to="/logout" @click.prevent="logout" class="nav-link" active-class="active">Logout</a>
+        </li>
+        </section>
       </ul>
     </section>
   </nav>
@@ -27,14 +37,27 @@
 
 <script>
 import img from '@/assets/img/Forum_Logo.png'
+import { userStore } from '../stores/userStore'
 
 export default {
   name: 'NavigationBar',
+  setup() {
+    const store = userStore()
+    return { store }
+  },
   data() {
     return {
-      img
+      img,
+      user: this.store.user,
+      token: this.store.token
     }
+  },
+  methods: {
+  logout() {
+    this.store.logout();
+    this.$router.push('/');
   }
+}
 }
 </script>
 
@@ -52,5 +75,6 @@ export default {
 #navbar {
   background-color: #e30380;
   width: 100%;
+  display: flex;
 }
 </style>

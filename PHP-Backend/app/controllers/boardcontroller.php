@@ -41,6 +41,14 @@ class BoardController extends Controller {
         
 
     }
+    public function getBoardIdByName($name) {  
+
+        $board = $this->boardService->getBoardIdByName($name);
+        $this->respond($board);
+
+        // $threads = $this->threadService->getThreads($board->getId());
+        // $this->displayView($threads);
+    }
     public function getBoardById($id) {  
 
         $board = $this->boardService->getBoardById($id);

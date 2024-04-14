@@ -32,5 +32,3 @@ class CategoryService {
         return $this->repository->delete($item);        
     }
 }
-
-?>

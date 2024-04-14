@@ -1,6 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization");
 header("Access-Control-Allow-Methods: *");
 
 error_reporting(E_ALL);
@@ -26,10 +26,12 @@ $router->get('/board/([^/]+)/threads', 'ThreadController@getThreadsByBoardName')
 $router->get('/thread/([^/]+)', 'ThreadController@getThreadByTitle');
 
 // routes for the post endpoint
+$router->get('/thread/(\d+)/posts', 'PostController@getPostsByThreadId');
 
 // routes for the users endpoint
 $router->post('/users/login', 'UserController@login');
 $router->post('/users/signup', 'UserController@signup');
+$router->get('/user/(\d+)', 'UserController@getUserById');
 
 // Run it!
 $router->run();

@@ -26,7 +26,7 @@ class ThreadRepository extends Repository
                 $stmt->bindParam(':board_name', $board_name);
                 $stmt->execute();
 
-                $stmt->setFetchMode(PDO::FETCH_CLASS, 'Thread');
+                $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\Thread');
                 $threads = $stmt->fetchAll();
 
                 return $threads;

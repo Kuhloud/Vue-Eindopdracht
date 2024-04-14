@@ -13,8 +13,8 @@
                 <small class="form-text text-muted">Required</small>
               </section>
               <section class="mb-3">
-                <label for="inputPassword" class="form-label">Enter Email Address</label>
-                <input type="password" v-model="email" class="form-control" id="inputPassword" />
+                <label for="inputEmail" class="form-label">Enter Email Address</label>
+                <input type="text" v-model="email" class="form-control" id="inputEmail" />
                 <small class="form-text text-muted">Required</small>
               </section>
               <section class="mb-3">

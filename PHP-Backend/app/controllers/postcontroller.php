@@ -12,19 +12,9 @@ class PostController extends Controller {
         $this->postService = new PostService();
     }
 
-    // router maps this to /article and /article/index automatically
-    public function index() {
-        // $threadId = $_SESSION['thread_id'];
-
-        // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        //     $postMessage = $this->sanitizeInput($_POST['postMessage']);
-        //     $userId = $_SESSION['user_id'];
-
-        //     $post = new Post();
-        //     $post->setThreadId($threadId);
-        //     $post->setUserId($userId);
-        //     $post->setMessage($postMessage);
-        //     $this->postService->insert($post);
-        // }
+    public function getPostsByThreadId($threadId)
+    {
+        $posts = $this->postService->getPostsByThreadId($threadId);
+        $this->respond($posts);
     }
 }

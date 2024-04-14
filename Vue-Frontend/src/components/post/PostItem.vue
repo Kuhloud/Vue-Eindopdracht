@@ -1,60 +1,26 @@
 <template>
-    <a
-      :href="`/thread/${thread.title}`"
-      class="clickable-card"
-      @click.prevent="goToThread(thread.title)"
-    >
       <section class="card">
-        <article class="card-body d-flex justify-content-between align-items-center">
-          <h4 class="card-title">{{ thread.title }}</h4>
-          <section class="d-flex">
-            <dl class="d-flex flex-column align-items-center border-start border-end border-secondary">
-              <dt>{{ thread.post_count }}</dt>
-              <dd><small class="card-subtitle mb-2 text-muted">Posts</small></dd>
-            </dl>
+        <article class="card-body">
+          <h4 class="card-title">{{ NewPost.username }}</h4>
+          <section class="d-flex flex-column">
+            <p>{{ NewPost.message }}</p>
+            <small class="card-subtitle mb-2 text-muted">Posted at: {{ NewPost.posted_at }}</small>
           </section>
         </article>
       </section>
-    </a>
   </template>
     <script>
-    import axios from '../../axios-auth'
-  
+
     export default {
       name: 'PostItem',
       props: {
-        post: Object
+        post: Object,
       },
-      data() {
-        return {
-          user: {
-            user_name: "",
-          }
+      computed: {
+        NewPost() {
+          return this.post
         }
       },
-      methods: {
-          update() {
-            axios
-              .get(`/board/${this.board_name}`)
-              .then((response) => {
-                this.board = response.data;
-                axios
-                  .get(`/board/${this.board.board_name}/threads`)
-                  .then((response) => {
-                    this.threads = response.data
-                  })
-                  .catch((error) => {
-                    console.log(error)
-                  })
-              })
-              .catch((error) => {
-                console.log(error)
-              })
-          },
-        goToThread(thread_title) {
-          this.$router.push(`/thread/${thread_title}`)
-                }
-            }
         }
       </script>
       <style scoped>

@@ -31,19 +31,17 @@ export default {
       boards: []
     }
   },
-  mounted() {
+  created() {
     this.update()
   },
   methods: {
-    update() {
-      axios
-        .get('/boards')
-        .then((response) => {
-          this.boards = response.data
-        })
-        .catch((error) => {
-          console.log(error)
-        })
+    async update() {
+      try {
+      const response = await axios.get('/boards')
+      this.boards = response.data
+      } catch (error) {
+      console.log(error)
+      }
     }
   }
 }

@@ -2,6 +2,7 @@
 namespace Repositories;
 
 use PDO;
+use PDOException;
 use Repositories\Repository;
 
 
@@ -41,6 +42,19 @@ class BoardRepository extends Repository
                 $board = $stmt->fetch();
 
                 return $board;
+
+        }
+        function getBoardIdByName(string $boardName)
+        {
+
+                $stmt = $this->connection->prepare("SELECT board_id FROM boards WHERE board_name = :boardName");
+                $stmt->bindParam(':boardName', $boardName);
+                $stmt->execute();
+
+                $stmt->setFetchMode(PDO::FETCH_CLASS, 'Board');
+                $boardId = $stmt->fetch();
+
+                return $boardId;
 
         }
         function getBoardByName(string $boardName)

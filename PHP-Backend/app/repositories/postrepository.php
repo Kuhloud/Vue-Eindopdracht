@@ -18,11 +18,11 @@ class PostRepository extends Repository
     }
     function getPostsByThreadId($threadId)
     {
-        $stmt = $this->connection->prepare("SELECT * FROM posts WHERE thread_id = :thread_id");
+        $stmt = $this->connection->prepare("SELECT * FROM posts WHERE thread_id IN (SELECT thread_id FROM threads WHERE thread_id = :thread_id)");
         $stmt->bindParam(':thread_id', $threadId);
         $stmt->execute();
 
-        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Post');
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\Post');
         $posts = $stmt->fetchAll();
 
         return $posts;

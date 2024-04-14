@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Gegenereerd op: 12 apr 2024 om 19:48
+-- Gegenereerd op: 14 apr 2024 om 20:05
 -- Serverversie: 11.1.3-MariaDB-1:11.1.3+maria~ubu2204
 -- PHP-versie: 8.2.12
 
@@ -44,7 +44,7 @@ INSERT INTO `boards` (`board_id`, `board_name`, `board_description`, `total_thre
 (2, 'Off-Topic', 'Memes, muziek, en andere ongerelateerde onderwerpen.', 0, 0),
 (3, 'ChatGPT', 'Discussies over hoe je kan slagen met zo min mogelijk moeite.', 0, 0),
 (4, 'Web-Design-Haat', 'Dit is letterlijk Jojo\'s Nineteen Eighty-Four.', 0, 0),
-(5, 'Test-Berichten', 'Hier kun je test berichten posten.', 0, 0);
+(5, 'Test-Berichten', 'Hier kun je test berichten posten.', 4, 0);
 
 -- --------------------------------------------------------
 
@@ -110,10 +110,10 @@ CREATE TABLE `threads` (
 --
 
 INSERT INTO `threads` (`thread_id`, `board_id`, `title`, `first_post`, `replies`, `created_at`, `user_id`) VALUES
-(1, 5, 'TestTitle', 'TestPost', 1, '2024-04-07 18:01:21', 1),
-(2, 5, 'Testy', 'Zesty', 1, '2024-04-07 18:07:45', 1),
-(3, 5, 'asd', 'as', 1, '2024-04-07 18:12:15', 1),
-(4, 5, 'Jsavs', 'xcxc', 1, '2024-04-07 21:14:51', 1);
+(1, 5, 'TestTitle', 'TestPost', 0, '2024-04-07 18:01:21', 1),
+(2, 5, 'Testy', 'Zesty', 0, '2024-04-07 18:07:45', 1),
+(3, 5, 'asd', 'as', 0, '2024-04-07 18:12:15', 1),
+(4, 5, 'Jsavs', 'xcxc', 0, '2024-04-07 21:14:51', 1);
 
 -- --------------------------------------------------------
 
@@ -156,7 +156,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `joined_at`, `role_id`) VALUES
 (1, 'TestMan1', 'Test_Man@hotmail.com', '$2y$10$BwsWY8TuQcGkJ0jJ1iOBvubQSY0m9l33WDhs61mJnBcN3itUSXolq', '2024-02-04 17:38:56', 1),
-(2, 'Normal User', 'normal@hotmail.com', '$2y$10$/o8adMcCz/bBpxePAXUXl.nef41f/WDVeBB5gP0qDbmxmQvmC3m42', '2024-04-08 12:46:31', 1);
+(2, 'Normal User', 'normal@hotmail.com', '$2y$10$/o8adMcCz/bBpxePAXUXl.nef41f/WDVeBB5gP0qDbmxmQvmC3m42', '2024-04-08 12:46:31', 1),
+(4, 'test', 'test@gmail.com', '$2y$10$0zKo4plkqe0CeF7txupdIe.PtELH3YFdyIlzfbWJJgymSxNX3scpu', '2024-04-14 07:24:34', 1);
 
 -- --------------------------------------------------------
 
@@ -262,7 +263,7 @@ ALTER TABLE `threads`
 -- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT voor een tabel `user_roles`

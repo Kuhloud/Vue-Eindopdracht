@@ -20,12 +20,12 @@ class UserController extends Controller
 
         // read user data from request body
         $logindata = $this->createObjectFromPostedJson("Models\User");
-        $resanitizedUsernameInput = $this->userService->checkIfEmail($logindata->username);
+        $resanitizedUsernameInput = $this->userService->checkIfEmail($logindata->getUsername());
 
         // get user from db
         $user = $this->userService->getUser(
             $resanitizedUsernameInput,
-            $logindata->password
+            $logindata->getPassword()
         );
 
         // if the method returned false, the username and/or password were incorrect
@@ -34,36 +34,44 @@ class UserController extends Controller
             return;
         }
 
-        $this->generateJwt($user);
+        $jwt = $this->generateJwt($user);
+
+        $this->respond([
+            "token" => $jwt,
+            "user" => $user
+        ]);
 
     }
     public function signup()
     {
         // read user data from request body
         $logindata = $this->createObjectFromPostedJson("Models\User");
-        if (!$this->userService->isValidEmail($logindata->email)) {
+        if (!$this->userService->isValidEmail($logindata->getEmail())) {
             $this->respondWithError(400, "Email is not valid");
             return;
         }
-        if (!$logindata->username || !$logindata->password) {
+        if (!$logindata->getUsername() || !$logindata->getPassword()) {
             $this->respondWithError(400, "Enter Username and/or password");
             return;
         }
 
         // get user from db
         $this->userService->insert(
-            $logindata->username,
-            $logindata->email,
-            $logindata->password
+            $logindata->getUsername(),
+            $logindata->getEmail(),
+            $logindata->getPassword()
         );
 
         $user = $this->userService->getUser(
-            $logindata->username,
-            $logindata->password
+            $logindata->getUsername(),
+            $logindata->getPassword()
         );
+        $jwt = $this->generateJwt($user);
 
-
-        $this->generateJwt($user);
+        $this->respond([
+            "token" => $jwt,
+            "user" => $user
+        ]);
     }
     function generateJwt($user)
     {
@@ -72,15 +80,23 @@ class UserController extends Controller
         $payload = [
             'iss' => 'http://localhost:5173/',
             'aud' => 'http://localhost/',
-            'sub' => $user->username,
+            'sub' => $user->getUsername(),
             'iat' => time(),
             'nbf' => time(),
             'exp' => time() + 3600
         ];
-        $jwt = JWT::encode($payload, $key, 'HS256');
+        return $jwt = JWT::encode($payload, $key, 'HS256');
 
         // return jwt
-        $this->respond($jwt);
 
+    }
+    function getUserById($user_id)
+    {
+        $user = $this->userService->getUserById($user_id);
+        if (!$user) {
+            $this->respondWithError(404, "User not found");
+            return;
+        }
+        $this->respond($user);
     }
 }
