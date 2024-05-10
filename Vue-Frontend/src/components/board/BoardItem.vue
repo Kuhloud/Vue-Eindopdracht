@@ -28,6 +28,7 @@ export default {
   props: {
     board: Object,
   },
+  
   methods: {
     goToBoard(board_name) {
       this.$router.push(`/board/${board_name}`);

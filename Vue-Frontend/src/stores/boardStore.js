@@ -3,19 +3,19 @@ import { defineStore } from 'pinia'
 
 export const boardStore = defineStore('store', {
   state: () => ({
-    board_id: 0
+    boardId: 0
   }),
-  getters: {
-    getBoard: (state) => state.board_id = ''
-  },
   actions: {
-    setBoardId(board_name) {
+    setCurrentBoardId(board_name) {
+      return new Promise((resolve, reject) => {
       axios
         .get(`/boards/${board_name}`)
         .then((res) => {
-          this.board_id = res.data.id
+          this.boardId = res.data.id
+          resolve()
         })
-        .catch((error) => console.log(error))
+        .catch((error) => reject(error))
+      })
     }
   }
 })

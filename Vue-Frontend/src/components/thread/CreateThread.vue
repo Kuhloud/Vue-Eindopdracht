@@ -44,7 +44,7 @@ export default {
         boardId: this.bStore.boardId,
         title: '',
         firstPost: '',
-        userId: this.uStore.user.userId,
+        userId: this.uStore.userId,
       },
     }
   },
@@ -52,8 +52,8 @@ export default {
 
   },
   methods: {
-    createThread(userId, boardId) {
-      axios.post('/thread', data)
+    createThread() {
+      axios.post('/thread', this.thread)
         .then(response => {
           console.log(response)
           this.$router.push({ path: `/thread/${threadTitle}` })

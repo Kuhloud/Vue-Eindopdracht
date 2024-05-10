@@ -38,7 +38,8 @@ class UserController extends Controller
 
         $this->respond([
             "token" => $jwt,
-            "user" => $user
+            "id" => $user->getUserId(),
+            "username" => $user->getUsername()
         ]);
 
     }
@@ -70,7 +71,8 @@ class UserController extends Controller
 
         $this->respond([
             "token" => $jwt,
-            "user" => $user
+            "id" => $user->getUserId(),
+            "username" => $user->getUsername()
         ]);
     }
     function generateJwt($user)
@@ -85,7 +87,7 @@ class UserController extends Controller
             'nbf' => time(),
             'exp' => time() + 3600
         ];
-        return $jwt = JWT::encode($payload, $key, 'HS256');
+        return JWT::encode($payload, $key, 'HS256');
 
         // return jwt
 

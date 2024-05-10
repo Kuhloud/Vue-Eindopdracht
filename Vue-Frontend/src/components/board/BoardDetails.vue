@@ -25,8 +25,8 @@ import ThreadItem from '../thread/ThreadItem.vue'
 export default {
   name: 'BoardDetails',
   setup() {
-    const uStore = userStore()
-    const bStore = boardStore()
+    const uStore = userStore();
+    const bStore = boardStore();
     return { uStore, bStore }
   },
   components: {
@@ -42,9 +42,9 @@ export default {
       threads: []
     }
   },
-  created() {
-    this.update()
-    this.bStore.setBoardId(this.board_name)
+  mounted() {
+    this.update();
+    this.setBoardId();
   },
   methods: {
     async update() {
@@ -57,6 +57,14 @@ export default {
         console.error(error)
       }
     },
+    async setBoardId() {
+    try {
+      await this.bStore.setCurrentBoardId(this.board_name);
+      console.log('Board ID set');
+    } catch (error) {
+      console.error('Error setting board ID:', error);
+    }
+  },
     createThread() {
       this.$router.push({ path: `/thread/${this.board_name}/create` })
     },

@@ -25,12 +25,17 @@ class ThreadController extends Controller {
     }
     public function createthread() {
         
-        $currentboard = $_SESSION['currentboard'];
-        $boardId = $_SESSION['board_id'];
-        $userId = $_SESSION['user_id'];
-      
-        // Retrieve the previous URL
-        require __DIR__ . "/../views/thread/createthread.php";
+        try
+        {
+            $thread = $this->createObjectFromPostedJson("Models\\Thread");
+            $thread = $this->threadService->insert($thread);
+            $this->respond($thread);
+        }
+        catch (\Exception $e)
+        {
+            $this->respondWithError(400, $e->getMessage());
+        
+        }
     }
     public function getThreadsByBoardName($name) {
         $threads = $this->threadService->getThreadsByBoardName($name);

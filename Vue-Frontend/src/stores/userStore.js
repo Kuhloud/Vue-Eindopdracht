@@ -4,32 +4,32 @@ import { defineStore } from 'pinia'
 export const userStore = defineStore('store', {
   state: () => ({
     token: '',
-    user: {}
+    userId: 0,
+    username: ''
   }),
   getters: {
     isLoggedIn: (state) => state.token != ''
   },
   actions: {
-    signup(user, email, password) {
-      const sanitizedUsername = user.trim().toLowerCase()
+    signup(username, email, password) {
+      const sanitizedUsername = username.trim().toLowerCase()
       const sanitizedEmail = email.trim().toLowerCase()
       return new Promise((resolve, reject) => {
         axios
           .post('/users/signup', {
-            user: sanitizedUsername,
+            username: sanitizedUsername,
             email: sanitizedEmail,
             password: password
           })
           .then((res) => {
-            console.log(res.data)
             this.setUserData(res.data)
             resolve()
           })
           .catch((error) => reject(error))
       })
     },
-    login(user, password) {
-      const sanitizedUsername = user.trim()
+    login(username, password) {
+      const sanitizedUsername = username.trim()
       return new Promise((resolve, reject) => {
         axios
           .post('/users/login', {
@@ -37,7 +37,6 @@ export const userStore = defineStore('store', {
             password: password
           })
           .then((res) => {
-            console.log(res.data)
             this.setUserData(res.data)
             resolve()
           })
@@ -47,27 +46,39 @@ export const userStore = defineStore('store', {
     setUserData(response)
     {
       localStorage.setItem('token', response.token);
-      localStorage.setItem('user', JSON.stringify(response.user));
-      this.user = response.user
-      this.token = response.token
+      localStorage.setItem('userid', response.id);
+      localStorage.setItem('username', response.username);
+      this.token = response.token;
+      this.userId = response.id;
+      this.username = response.username;
     },
     autologin() {
       if (localStorage['token']) {
         try {
-          this.token = localStorage.getItem('token')
-          this.user = JSON.parse(localStorage.getItem('user'));
+          this.token = localStorage.getItem('token');
+          this.userId = localStorage.getItem('userId');
+          this.username = localStorage.getItem('username');
           axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
         } catch (error) {
-          console.error('Error while retrieving data from localStorage:', error, localStorage.getItem('user'));
+          console.error('Error while retrieving data from localStorage:', error);
         }
       }
     },
+    validateInput(email) {
+      if (email != '') {
+        this.errorMessage = 'Please fill in your email address'
+        return false
+      }
+      return true
+    },
     logout() {
-      this.token = ''
-      this.user = ''
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
-      axios.defaults.headers.common['Authorization'] = ''
+      this.token = '';
+      this.userId = 0;
+      this.username = '';
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('username');
+      axios.defaults.headers.common['Authorization'] = '';
     }
   }
 })
