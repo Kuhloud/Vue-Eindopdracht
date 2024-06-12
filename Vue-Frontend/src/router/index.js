@@ -13,9 +13,9 @@ const router = createRouter({
   routes: [
     { path: '/', component: HomePage },
     { path: '/boards', component: BoardList },
-    { path: '/board/:board_name', component: BoardDetails, props: true },
-    { path: '/thread/:thread_title', component: ThreadDetails, props: true },
-    { path: '/thread/:board_name/create', component: CreateThread, props: true},
+    { path: '/board/:board_name.:board_id', component: BoardDetails, props: true },
+    { path: '/thread/:thread_title.:thread_id', component: ThreadDetails, props: true },
+    { path: '/board/:board_name.:board_id/createthread', component: CreateThread, props: true},
     { path: '/login', component: Login },
     { path: '/signup', component: Signup }
   ]

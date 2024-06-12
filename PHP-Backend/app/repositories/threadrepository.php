@@ -65,8 +65,8 @@ class ThreadRepository extends Repository
                 $stmt->bindParam(':first_post', $first_post);
                 $stmt->bindParam(':user_id', $user_id);
 
-                $stmt->execute();
-                return $this->connection->lastInsertId();
+                return $stmt->execute();
+                //return $this->connection->lastInsertId();
         }
         function updateReplies($threadId)
         {

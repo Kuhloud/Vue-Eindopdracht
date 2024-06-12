@@ -4,11 +4,12 @@ import { defineStore } from 'pinia'
 export const userStore = defineStore('store', {
   state: () => ({
     token: '',
-    userId: 0,
+    user_id: 0,
     username: ''
   }),
   getters: {
-    isLoggedIn: (state) => state.token != ''
+    isLoggedIn: (state) => state.token != '',
+    getUserId: (state) => state.user_id,
   },
   actions: {
     signup(username, email, password) {
@@ -37,6 +38,7 @@ export const userStore = defineStore('store', {
             password: password
           })
           .then((res) => {
+            console.log(res)
             this.setUserData(res.data)
             resolve()
           })
@@ -49,14 +51,14 @@ export const userStore = defineStore('store', {
       localStorage.setItem('userid', response.id);
       localStorage.setItem('username', response.username);
       this.token = response.token;
-      this.userId = response.id;
+      this.user_id = response.id;
       this.username = response.username;
     },
     autologin() {
       if (localStorage['token']) {
         try {
           this.token = localStorage.getItem('token');
-          this.userId = localStorage.getItem('userId');
+          this.user_id = localStorage.getItem('userId');
           this.username = localStorage.getItem('username');
           axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
         } catch (error) {
@@ -73,7 +75,7 @@ export const userStore = defineStore('store', {
     },
     logout() {
       this.token = '';
-      this.userId = 0;
+      this.user_id = 0;
       this.username = '';
       localStorage.removeItem('token');
       localStorage.removeItem('userId');

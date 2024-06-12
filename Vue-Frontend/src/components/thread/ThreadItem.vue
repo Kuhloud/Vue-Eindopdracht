@@ -2,7 +2,7 @@
   <a
     :href="`/thread/${thread.title}`"
     class="clickable-card"
-    @click.prevent="goToThread(thread.title)"
+    @click.prevent="goToThread(thread.thread_id, thread.title)"
   >
     <section class="card">
       <article class="card-body d-flex justify-content-between align-items-center">
@@ -25,8 +25,8 @@
       thread: Object
     },
     methods: {
-      goToThread(thread_title) {
-        this.$router.push(`/thread/${thread_title}`)
+      goToThread(thread_id, thread_title) {
+        this.$router.push(`/thread/${thread_title}.${thread_id}`)
               }
           }
       }

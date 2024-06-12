@@ -2,7 +2,7 @@
 <section class="container d-flex justify-content-center align-items-center">
     <article class="card shadow p-3 mb-5 bg-body rounded" style="width: 800px;">
         <header class="card-header">
-            Post a New Thread - {{ board_name }}
+            Post a New Thread - {{ board_name }}.{{ board_id }} 
         </header>
         <section class="card-body">
             <form id="createThread" onsubmit="event.preventDefault()">
@@ -17,7 +17,7 @@
                     <label for="tags" class="form-label">Tags:</label>
                     <input type="text" class="form-control" id="tags" placeholder="Enter tags (separated by commas)">
                 </section>
-                <button type="submit" onclick="createThread()" class="btn btn-primary">Create Thread</button>
+                <button type="submit" @click="createThread" class="btn btn-primary">Create Thread</button>
             </form>
         </section>
     </article>
@@ -26,43 +26,42 @@
 <script>
 import axios from '../../axios-auth'
 import { userStore } from '../../stores/userStore'
-import { boardStore } from '../../stores/boardStore'
 
 export default {
   name: 'CreateThread',
   setup() {
-    const uStore = userStore()
-    const bStore = boardStore()
-    return { uStore, bStore }
+    const store = userStore()
+    return { store }
   },
   props: {
-    board_name: String
+    board_id: Number,
+    board_name: String,
   },
   data() {
     return {
       thread: {
-        boardId: this.bStore.boardId,
+        boardId: this.board_id,
         title: '',
         firstPost: '',
-        userId: this.uStore.userId,
+        userId: this.store.getUserId,
       },
+      tags: [],
     }
-  },
-  async created() {
-
   },
   methods: {
     createThread() {
       axios.post('/thread', this.thread)
         .then(response => {
           console.log(response)
-          this.$router.push({ path: `/thread/${threadTitle}` })
+          this.$router.push({ path: `/thread/${response.title}.${response.thread_id}` })
         })
+        .then(axios.post)
         .catch(error => {
           console.error(error)
         })
-    }
-
+    },
   }
 }
+
+
 </script>

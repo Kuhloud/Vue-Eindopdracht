@@ -13,12 +13,6 @@ class ThreadController extends Controller {
     }
 
     // router maps this to /article and /article/index automatically
-    public function index()
-    {
-        $threadId = $_SESSION['thread_id'];
-        $thread = $this->threadService->getThreadById($threadId);
-        $this->currentThread($thread);
-    }
     function currentThread($thread)
     {
         $_SESSION['currentthread'] = $thread;
@@ -28,8 +22,12 @@ class ThreadController extends Controller {
         try
         {
             $thread = $this->createObjectFromPostedJson("Models\\Thread");
-            $thread = $this->threadService->insert($thread);
-            $this->respond($thread);
+            $newThread = $this->threadService->insert($thread);
+            $this->respond([
+                "thread_id" => $newThread->getThreadId(),
+                "title" => $newThread->getTitle(),
+                "user_id" => $newThread->getUserId()
+            ]);
         }
         catch (\Exception $e)
         {
@@ -43,6 +41,10 @@ class ThreadController extends Controller {
     }
     public function getThreadByTitle($title) {
         $threads = $this->threadService->getThreadByTitle($title);
+        $this->respond($threads);
+    }
+    public function getThreadById($threadId) {
+        $threads = $this->threadService->getThreadById($threadId);
         $this->respond($threads);
     }
 }

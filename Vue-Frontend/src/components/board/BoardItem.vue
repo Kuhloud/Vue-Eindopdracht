@@ -3,7 +3,7 @@
     :href="`/board/${board.board_name}`"
     class="clickable-card"
     data-bs-toggle="tooltip" data-placement="right" :title="board.board_description"
-    @click.prevent="goToBoard(board.board_name)"
+    @click.prevent="goToBoard(board.board_name, board.board_id)"
   >
     <section class="card">
       <article class="card-body d-flex justify-content-between align-items-center">
@@ -30,8 +30,8 @@ export default {
   },
   
   methods: {
-    goToBoard(board_name) {
-      this.$router.push(`/board/${board_name}`);
+    goToBoard(board_name, board_id) {
+      this.$router.push(`/board/${board_name}.${board_id}`);
     }
   }
 }

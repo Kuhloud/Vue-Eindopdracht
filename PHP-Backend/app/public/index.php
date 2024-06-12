@@ -23,12 +23,17 @@ $router->get('/board/([^/]+)', 'BoardController@getBoardByName');
 
 // routes for the thread endpoint
 $router->get('/board/([^/]+)/threads', 'ThreadController@getThreadsByBoardName');
+$router->post('/thread', 'ThreadController@createThread');
 $router->get('/thread/([^/]+)', 'ThreadController@getThreadByTitle');
+$router->get('/thread/([^/]+)', 'ThreadController@getThreadByTitle');
+
+// routes for the tag endpoint
+$router->get('/tags', 'TagController@addTags');
 
 // routes for the post endpoint
 $router->get('/thread/(\d+)/posts', 'PostController@getPostsByThreadId');
 
-// routes for the users endpoint
+// routes for the user endpoint
 $router->post('/users/login', 'UserController@login');
 $router->post('/users/signup', 'UserController@signup');
 $router->get('/user/(\d+)', 'UserController@getUserById');

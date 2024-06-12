@@ -2,7 +2,7 @@
   <section class="container">
     <article class="row">
       <header class="col-12">
-          <h2>{{ board.board_name }}</h2>
+          <h2>{{ board.board_name }}.{{ board.board_id }}</h2>
           <p>{{ board.board_description }}</p>
           <button v-if="uStore.isLoggedIn" @click="createThread" class="btn btn-primary" role="button">Post Thread</button>
       </header>
@@ -19,22 +19,20 @@
 <script>
 import axios from '../../axios-auth'
 import { userStore } from '../../stores/userStore'
-import { boardStore } from '../../stores/boardStore'
 import ThreadItem from '../thread/ThreadItem.vue'
 
 export default {
   name: 'BoardDetails',
   setup() {
     const uStore = userStore();
-    const bStore = boardStore();
-    return { uStore, bStore }
+    return { uStore }
   },
   components: {
     ThreadItem
   },
   props: {
     board_name: String,
-    board_description: String,
+    board_id: Number,
   },
   data() {
     return {
@@ -44,7 +42,6 @@ export default {
   },
   mounted() {
     this.update();
-    this.setBoardId();
   },
   methods: {
     async update() {
@@ -57,16 +54,17 @@ export default {
         console.error(error)
       }
     },
-    async setBoardId() {
-    try {
-      await this.bStore.setCurrentBoardId(this.board_name);
-      console.log('Board ID set');
-    } catch (error) {
-      console.error('Error setting board ID:', error);
-    }
-  },
+  //   async setBoardId() {
+  //   try {
+  //     await this.bStore.setCurrentBoardId(this.board_name);
+  //     console.log('Board ID set');
+  //   } catch (error) {
+  //     console.error('Error setting board ID:', error);
+  //   }
+  // },
     createThread() {
-      this.$router.push({ path: `/thread/${this.board_name}/create` })
+      this.$router.push({ 
+        path: `/board/${this.board_name}.${this.board_id}/createthread`})
     },
   }
 }
