@@ -13,4 +13,10 @@ class TagService {
         }
         return $repository->getTagByName($tag->getTagName());
     }
+    public function getTagsByThreadId($thread_id) {
+        // retrieve data
+        $repository = new TagRepository();
+        $threadTags = $repository->getTagsByThreadId($thread_id);
+        return $threadTags;
+    }
 }

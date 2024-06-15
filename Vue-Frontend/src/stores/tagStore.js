@@ -1,17 +1,21 @@
 import axios from '../axios-auth'
 import { defineStore } from 'pinia'
 
-export const boardStore = defineStore('store', {
+export const tagStore = defineStore('store', {
   state: () => ({
-    boardId: 0
+    tags: []
   }),
+  getters: {
+    getTags: (state) => state.tags
+  },
   actions: {
-    setCurrentBoardId(board_name) {
+    getThreadTags(thread_id) {
       return new Promise((resolve, reject) => {
       axios
-        .get(`/boards/${board_name}`)
+        .get(`/tags/${thread_id}`)
         .then((res) => {
-          this.boardId = res.data.id
+          this.tags = res.data
+          console.log(this.tags)
           resolve()
         })
         .catch((error) => reject(error))

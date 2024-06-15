@@ -54,4 +54,17 @@ function getTagByName($tag_name)
         $tag = $stmt->fetch();
         return $tag;
 }
+function getTagsByThreadId($thread_id)
+{
+        $stmt = $this->connection->prepare("SELECT t.* FROM tags t JOIN thread_tags th ON t.tag_id = th.tag_id WHERE th.thread_id = :thread_id");
+        $stmt->bindParam(':thread_id', $thread_id);
+        $stmt->execute();
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\Tag');
+        $tags = $stmt->fetchAll();
+        if (empty($tags)) {
+                return null;
+        }
+        return $tags;
+}
 }

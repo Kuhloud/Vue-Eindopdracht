@@ -32,6 +32,7 @@ $router->put('/thread/(\d+)/totalreplies', 'ThreadController@updatePostCount');
 // routes for the tag endpoint
 $router->post('/tag', 'TagController@addTag');
 $router->post('/threadtag/(\d+)', 'ThreadTagController@addThreadTag');
+$router->get('/tags/(\d+)', 'TagController@getTagsByThreadId');
 
 // routes for the post endpoint
 $router->get('/thread/(\d+)/posts', 'PostController@getPostsByThreadId');

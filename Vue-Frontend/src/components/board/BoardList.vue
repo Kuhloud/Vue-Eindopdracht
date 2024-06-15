@@ -32,10 +32,15 @@ export default {
       boards: []
     }
   },
-  mounted() {
+  async mounted() {
     this.update().then(() => {
         this.handleUpdateTotals(this.boards);
+    }),
+    setInterval(() => {
+    this.update().then(() => {
+      this.handleUpdateTotals(this.boards);
     });
+  }, 5000);
   },
   methods: {
     async update() {
@@ -57,7 +62,7 @@ export default {
         .catch(error => {
             console.error(error);
         });
-});
+    });
   }
   }
 }

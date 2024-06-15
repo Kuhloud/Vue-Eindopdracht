@@ -65,16 +65,12 @@ export default {
     .filter(Boolean)
     .map(tag => tag.replace(/[^a-z0-9-_]/gi, ''));
     },
-    displayResponse(response) {
-      console.log(response);
-    },
     async tagTest() {
       if (this.tags != '')
       {
           let tags = this.splitTags(this.tags);
           for (const tag of tags) {
-            const response = await axios.post('/tag', tag);
-            this.displayResponse(response);
+            await axios.post('/tag', tag);
           }
           return true;
       }

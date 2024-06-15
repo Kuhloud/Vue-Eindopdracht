@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Gegenereerd op: 14 apr 2024 om 20:05
+-- Gegenereerd op: 15 jun 2024 om 16:50
 -- Serverversie: 11.1.3-MariaDB-1:11.1.3+maria~ubu2204
 -- PHP-versie: 8.2.12
 
@@ -44,7 +44,7 @@ INSERT INTO `boards` (`board_id`, `board_name`, `board_description`, `total_thre
 (2, 'Off-Topic', 'Memes, muziek, en andere ongerelateerde onderwerpen.', 0, 0),
 (3, 'ChatGPT', 'Discussies over hoe je kan slagen met zo min mogelijk moeite.', 0, 0),
 (4, 'Web-Design-Haat', 'Dit is letterlijk Jojo\'s Nineteen Eighty-Four.', 0, 0),
-(5, 'Test-Berichten', 'Hier kun je test berichten posten.', 4, 0);
+(5, 'Test-Berichten', 'Hier kun je test berichten posten.', 34, 5);
 
 -- --------------------------------------------------------
 
@@ -67,7 +67,9 @@ CREATE TABLE `posts` (
 INSERT INTO `posts` (`post_id`, `thread_id`, `user_id`, `message`, `posted_at`) VALUES
 (1, 2, 1, 'Zesty', '2024-04-07 18:07:45'),
 (2, 3, 1, 'as', '2024-04-07 18:12:15'),
-(3, 4, 1, 'xcxc', '2024-04-07 21:14:51');
+(3, 4, 1, 'xcxc', '2024-04-07 21:14:51'),
+(4, 2, 2, 'Hesty', '2024-06-15 14:52:14'),
+(5, 2, 2, 'Resty', '2024-06-15 15:03:55');
 
 -- --------------------------------------------------------
 
@@ -87,7 +89,16 @@ CREATE TABLE `tags` (
 INSERT INTO `tags` (`tag_id`, `tag_name`) VALUES
 (1, 'Esty'),
 (2, 'Taggies'),
-(3, 'JAva');
+(3, 'Java'),
+(4, 'Tag'),
+(5, 'Nederlands'),
+(6, 'Test'),
+(7, 'Message'),
+(8, 'Banaan'),
+(9, 'Bericht'),
+(10, 'Werkt'),
+(11, 'testing'),
+(12, 'testinging');
 
 -- --------------------------------------------------------
 
@@ -111,9 +122,39 @@ CREATE TABLE `threads` (
 
 INSERT INTO `threads` (`thread_id`, `board_id`, `title`, `first_post`, `replies`, `created_at`, `user_id`) VALUES
 (1, 5, 'TestTitle', 'TestPost', 0, '2024-04-07 18:01:21', 1),
-(2, 5, 'Testy', 'Zesty', 0, '2024-04-07 18:07:45', 1),
-(3, 5, 'asd', 'as', 0, '2024-04-07 18:12:15', 1),
-(4, 5, 'Jsavs', 'xcxc', 0, '2024-04-07 21:14:51', 1);
+(2, 5, 'Testy', 'Zesty', 3, '2024-04-07 18:07:45', 1),
+(3, 5, 'asd', 'as', 1, '2024-04-07 18:12:15', 1),
+(4, 5, 'Jsavs', 'xcxc', 1, '2024-04-07 21:14:51', 1),
+(5, 5, 'dfsa', 'wer', 0, '2024-06-12 14:24:46', 1),
+(6, 5, 'weds', 'wer', 0, '2024-06-12 14:24:47', 1),
+(7, 5, 'Het WERKT', 'Lekker', 0, '2024-06-12 14:26:36', 1),
+(8, 5, 'Tag Test', 'Testings', 0, '2024-06-14 15:43:46', 1),
+(9, 5, 'Tesfg', 'Testor', 0, '2024-06-14 19:56:17', 1),
+(10, 5, 'dsde', 'Testr', 0, '2024-06-14 19:58:28', 1),
+(11, 5, 'Tfdg', 'Testor23', 0, '2024-06-14 19:58:47', 1),
+(12, 5, 'Why', 'idk', 0, '2024-06-14 20:13:56', 1),
+(13, 5, 'Tesd', 'erg', 0, '2024-06-14 20:16:11', 1),
+(14, 5, 'Tag Test 3', 'Working now?', 0, '2024-06-14 20:34:42', 1),
+(15, 5, 'Tesdf', 'gfdew', 0, '2024-06-14 20:36:46', 1),
+(16, 5, 'pls Tags', 'Testing again', 0, '2024-06-15 07:38:16', 1),
+(17, 5, 'Tag Test 4', 'Testing tags', 0, '2024-06-15 07:43:15', 1),
+(18, 5, 'Maybe', 'maybe', 0, '2024-06-15 07:52:13', 1),
+(19, 5, 'tags gefixt', 'Ik begrijp nu waarom, denk ik', 0, '2024-06-15 07:56:18', 1),
+(20, 5, 'Tehest', 'Tefs', 0, '2024-06-15 08:03:17', 1),
+(21, 5, 'Insom test', 'Insomnia', 0, '2024-06-15 09:41:49', 1),
+(22, 5, 'Teste', 'Teasft', 0, '2024-06-15 10:24:09', 1),
+(23, 5, 'taegts', 'hbfdf', 0, '2024-06-15 10:25:29', 1),
+(24, 5, 'hfdffdgfdasss', 'Tedgesd', 0, '2024-06-15 10:28:21', 1),
+(25, 5, 'Tfddggg', 'Tewssss', 0, '2024-06-15 10:31:39', 1),
+(26, 5, 'trhhh', 'fdsjdfdf', 0, '2024-06-15 10:43:03', 1),
+(27, 5, 'trhhh', 'fdsjdfdf', 0, '2024-06-15 10:43:41', 1),
+(28, 5, 'Tag Test 5', 'Ik had function op private staan, terwijl het op public moest', 0, '2024-06-15 10:48:14', 1),
+(29, 5, 'lhlhlylylh', 'fdggh', 0, '2024-06-15 10:58:04', 1),
+(30, 5, 'yyyyyyyyyyyy', 'gghhhhhhhhh', 0, '2024-06-15 11:00:34', 1),
+(31, 5, 'ttyhhn', 'gggg', 0, '2024-06-15 11:04:18', 1),
+(32, 5, 'Insommmi teste', 'Bruhsomnia', 0, '2024-06-15 11:05:12', 1),
+(33, 5, 'ff kijken', 'Het werkt nu, denk ik', 0, '2024-06-15 12:01:57', 2),
+(34, 5, 'Nog een test', 'Gee', 0, '2024-06-15 12:07:10', 2);
 
 -- --------------------------------------------------------
 
@@ -133,7 +174,17 @@ CREATE TABLE `thread_tags` (
 INSERT INTO `thread_tags` (`thread_id`, `tag_id`) VALUES
 (2, 1),
 (3, 2),
-(4, 3);
+(9, 2),
+(10, 2),
+(11, 2),
+(12, 2),
+(24, 2),
+(4, 3),
+(28, 5),
+(28, 6),
+(34, 6),
+(34, 11),
+(34, 12);
 
 -- --------------------------------------------------------
 
@@ -245,19 +296,19 @@ ALTER TABLE `boards`
 -- AUTO_INCREMENT voor een tabel `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT voor een tabel `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `tag_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `tag_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT voor een tabel `threads`
 --
 ALTER TABLE `threads`
-  MODIFY `thread_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `thread_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT voor een tabel `users`

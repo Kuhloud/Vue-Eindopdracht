@@ -3,38 +3,46 @@
     <article class="row">
       <header class="col-12">
         <h2>{{ thread_title }}</h2>
+        <h3 class="d-flex">
+          <tag-item v-for="tag in tags" :key="tag.tag_id" :tag="tag" />
+        </h3>
       </header>
     </article>
   </section>
   <section>
-    <post-item :thread_title="thread_title" v-for="post in posts" :key="post.post_id" :post="post" />
+    <post-item v-for="post in posts" :key="post.post_id" :post="post" />
   </section>
-  <section v-if="store.isLoggedIn" class="container d-flex justify-content-center align-items-center">
-      <article class="card shadow p-3 mb-5 bg-body rounded" style="width: 800px;">
-        <section class="card-body">
-          <form id="newPost" onsubmit="event.preventDefault()">
-            <section class="mb-3">
-              <textarea class="form-control" v-model="post.message" id="firstPost" placeholder="Write your reply...">rows="6"></textarea>
-            </section>
-            <button type="submit" @click="newPost" class="btn btn-primary">Post Reply</button>
-          </form>
-        </section>
-      </article>
-    </section>
+  <section v-if="uStore.isLoggedIn" class="container d-flex justify-content-center align-items-center">
+    <article class="card shadow p-3 mb-5 bg-body rounded" style="width: 800px;">
+      <section class="card-body">
+        <form id="newPost" onsubmit="event.preventDefault()">
+          <section class="mb-3">
+            <textarea class="form-control" v-model="post.message" id="firstPost"
+              placeholder="Write your reply...">rows="6"></textarea>
+          </section>
+          <button type="submit" @click="newPost" class="btn btn-primary">Post Reply</button>
+        </form>
+      </section>
+    </article>
+  </section>
 </template>
 <script>
 import axios from '../../axios-auth'
 import { userStore } from '../../stores/userStore'
+import { tagStore } from '../../stores/tagStore'
 import PostItem from '../post/PostItem.vue'
+import TagItem from '../tag/TagItem.vue'
 
 export default {
   name: 'ThreadDetails',
   setup() {
-    const store = userStore();
-    return { store }
+    const uStore = userStore();
+    const tStore = tagStore();
+    return { uStore, tStore }
   },
   components: {
-    PostItem
+    PostItem,
+    TagItem
   },
   props: {
     thread_id: Number,
@@ -44,14 +52,20 @@ export default {
     return {
       posts: [],
       post: {
-          threadId: this.thread_id,
-          message: '',
-          userId: this.store.getUserId,
-        },
+        threadId: this.thread_id,
+        message: '',
+        userId: this.uStore.getUserId,
+      },
+      tags: [],
     }
   },
   async mounted() {
-    await this.getPosts()
+    await this.getPosts();
+    await this.getThreadTags(this.thread_id);
+
+    setInterval(() => {
+      this.getPosts();
+    }, 5000);
   },
   methods: {
     async getPosts() {
@@ -69,6 +83,16 @@ export default {
         console.error(error)
       }
     },
+    getThreadTags(thread_id) {
+      axios
+        .get(`/tags/${thread_id}`)
+        .then((res) => {
+          this.tags = res.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     postCheck() {
       if (!this.post.message) {
         alert('Please fill in all fields');
@@ -78,13 +102,11 @@ export default {
       return true;
     },
     async newPost() {
-      try 
-      {
-          if (!this.postCheck()) {
+      try {
+        if (!this.postCheck()) {
           return;
         }
-          const response = await axios.post('/post', this.post);
-          console.log(response);
+        await axios.post('/post', this.post);
       }
       catch (error) {
         console.error(error)

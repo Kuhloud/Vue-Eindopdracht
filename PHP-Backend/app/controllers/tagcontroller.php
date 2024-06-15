@@ -28,6 +28,11 @@ class TagController extends Controller
         
         }
     }
+    public function getTagsByThreadId($threadId)
+    {
+        $tags = $this->tagService->getTagsByThreadId($threadId);
+        $this->respond($tags);
+    }
     
     private function checkRequiredFields(string $newThread)
     {
