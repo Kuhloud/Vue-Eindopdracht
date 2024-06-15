@@ -90,12 +90,10 @@ export default {
         tags = this.splitTags(this.tags);
         for (const tag of tags) {
             const tagResponse = await axios.post('/tag', { tag_name: tag });
-            this.displayResponse(tagResponse);
-            const threadTagResponse = await axios.post(`/threadtag/${response.data.thread_id}`, tagResponse.data);
-            this.displayResponse(threadTagResponse);
+            await axios.post(`/threadtag/${response.data.thread_id}`, tagResponse.data);
           }
       }
-      //this.$router.push({ path: `/thread/${response.data.title}.${response.data.thread_id}` });
+      this.$router.push({ path: `/thread/${response.data.title}.${response.data.thread_id}` });
       } catch (error) {
       console.error(error);
       }

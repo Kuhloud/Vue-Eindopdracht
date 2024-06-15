@@ -37,6 +37,6 @@ class ThreadService {
     public function updateReplies($threadId) {
         // retrieve data
         $repository = new ThreadRepository();
-        $repository->updateReplies($threadId);
+        return $repository->updateReplies($threadId);
     }
 }

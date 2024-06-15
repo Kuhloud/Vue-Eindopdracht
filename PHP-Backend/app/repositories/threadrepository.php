@@ -78,8 +78,16 @@ class ThreadRepository extends Repository
         }
         function updateReplies($threadId)
         {
-                $stmt = $this->connection->prepare("UPDATE threads SET replies = replies + 1 WHERE thread_id = :thread_id");
+                $stmt = $this->connection->prepare("SELECT COUNT(*) FROM posts p JOIN threads t ON p.thread_id = t.thread_id WHERE t.thread_id = :thread_id");
                 $stmt->bindParam(':thread_id', $threadId);
                 $stmt->execute();
+
+                $totalReplies = $stmt->fetchColumn();
+
+                $stmt = $this->connection->prepare("UPDATE threads SET replies = :replies WHERE thread_id = :thread_id");
+                $stmt->bindParam(':thread_id', $threadId);
+                $stmt->bindParam(':replies', $totalReplies);
+                $stmt->execute();
+                return $totalReplies;
         }
     }

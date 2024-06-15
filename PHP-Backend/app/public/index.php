@@ -27,6 +27,7 @@ $router->put('/board/(\d+)/totalmessages', 'BoardController@updatePostCount');
 $router->get('/board/([^/]+)/threads', 'ThreadController@getThreadsByBoardName');
 $router->post('/thread', 'ThreadController@createThread');
 $router->get('/thread/([^/]+)', 'ThreadController@getThreadByTitle');
+$router->put('/thread/(\d+)/totalreplies', 'ThreadController@updatePostCount');
 
 // routes for the tag endpoint
 $router->post('/tag', 'TagController@addTag');
@@ -34,6 +35,7 @@ $router->post('/threadtag/(\d+)', 'ThreadTagController@addThreadTag');
 
 // routes for the post endpoint
 $router->get('/thread/(\d+)/posts', 'PostController@getPostsByThreadId');
+$router->post('/post', 'PostController@addPost');
 
 // routes for the user endpoint
 $router->post('/users/login', 'UserController@login');

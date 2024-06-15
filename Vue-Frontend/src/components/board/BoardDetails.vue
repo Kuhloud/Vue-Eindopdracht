@@ -4,7 +4,7 @@
       <header class="col-12">
           <h2>{{ board.board_name }}</h2>
           <p>{{ board.board_description }}</p>
-          <button v-if="uStore.isLoggedIn" @click="createThread" class="btn btn-primary" role="button">Post Thread</button>
+          <button v-if="store.isLoggedIn" @click="createThread" class="btn btn-primary" role="button">Post Thread</button>
       </header>
   </article>
   </section>
@@ -13,6 +13,8 @@
         v-for="thread in threads"
         :key="thread.thread_id"
         :thread="thread"
+        @update="update"
+        @updateTotals="handleUpdateReplies"
       />
   </section>
 </template>
@@ -24,8 +26,8 @@ import ThreadItem from '../thread/ThreadItem.vue'
 export default {
   name: 'BoardDetails',
   setup() {
-    const uStore = userStore();
-    return { uStore }
+    const store = userStore();
+    return { store }
   },
   components: {
     ThreadItem
@@ -40,8 +42,10 @@ export default {
       threads: []
     }
   },
-  created() {
-    this.update();
+  mounted() {
+    this.update().then(() => {
+        this.handleUpdateReplies(this.threads);
+    });
   },
   methods: {
     async update() {
@@ -51,17 +55,17 @@ export default {
         const threadResponse = await axios.get(`/board/${this.board_name}/threads`)
         this.threads = threadResponse.data
       } catch (error) {
-        console.error(error)
+      console.log(error)
       }
     },
-  //   async setBoardId() {
-  //   try {
-  //     await this.bStore.setCurrentBoardId(this.board_name);
-  //     console.log('Board ID set');
-  //   } catch (error) {
-  //     console.error('Error setting board ID:', error);
-  //   }
-  // },
+    handleUpdateReplies(threads) {
+      threads.forEach((thread) => {
+        axios.put(`/thread/${thread.thread_id}/totalreplies`)
+        .catch(error => {
+            console.error(error);
+        });
+    });
+  },
     createThread() {
       this.$router.push({ 
         path: `/board/${this.board_name}.${this.board_id}/createthread`})
