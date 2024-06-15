@@ -2,7 +2,7 @@
   <section class="container">
     <article class="row">
       <header class="col-12">
-          <h2>{{ board.board_name }}.{{ board.board_id }}</h2>
+          <h2>{{ board.board_name }}</h2>
           <p>{{ board.board_description }}</p>
           <button v-if="uStore.isLoggedIn" @click="createThread" class="btn btn-primary" role="button">Post Thread</button>
       </header>
@@ -40,7 +40,7 @@ export default {
       threads: []
     }
   },
-  mounted() {
+  created() {
     this.update();
   },
   methods: {

@@ -11,16 +11,16 @@ class TagController extends Controller
     {
         $this->tagService = new TagService();
     }
-    private function addTags(array $tags)
+    public function addTag()
     {
         try
         {
-            foreach ($tags as $tag) 
-            {
-                $tag = $this->createObjectFromPostedJson("Models\\Tag");
-                $tagId = $this->tagService->insert($tag);
-                $this->respond($tagId);
-            }
+            $tag = $this->createObjectFromPostedJson("Models\\Tag");
+            $threadTag = $this->tagService->insert($tag);
+            $this->respond($threadTag);
+            // $this->respond([
+            //     "tag_id" => $threadTag->getTagId(),
+            // ]);
         }
         catch (\Exception $e)
         {

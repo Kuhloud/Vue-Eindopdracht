@@ -79,16 +79,37 @@ class BoardRepository extends Repository
                 $stmt->execute([$board->getBoardName()]);
 
         }
-        function updatePostCount($boardid)
+        function updatePostCount($boardId)
         {
-                $stmt = $this->connection->prepare("UPDATE boards SET total_messages = total_messages + 1 WHERE board_id = :board_id");
-                $stmt->bindParam(':board_id', $boardid);
+                $stmt = $this->connection->prepare("
+                    SELECT COUNT(*) 
+                    FROM posts p 
+                    JOIN threads t ON p.thread_id = t.thread_id 
+                    JOIN boards b ON t.board_id = b.board_id 
+                    WHERE b.board_id = :board_id");
+                $stmt->bindParam(':board_id', $boardId);
                 $stmt->execute();
+
+                $totalPosts = $stmt->fetchColumn();
+
+                $stmt = $this->connection->prepare("UPDATE boards SET total_messages = :total_messages WHERE board_id = :board_id");
+                $stmt->bindParam(':board_id', $boardId);
+                $stmt->bindParam(':total_messages', $totalPosts);
+                $stmt->execute();
+                return $totalPosts;
         }
         function updateThreadCount($boardId)
         {
-                $stmt = $this->connection->prepare("UPDATE boards SET total_threads = total_threads + 1 WHERE board_id = :board_id");
+                $stmt = $this->connection->prepare("SELECT COUNT(*) FROM threads t JOIN boards b ON t.board_id = b.board_id WHERE b.board_id = :board_id");
                 $stmt->bindParam(':board_id', $boardId);
                 $stmt->execute();
+
+                $totalThreads = $stmt->fetchColumn();
+
+                $stmt = $this->connection->prepare("UPDATE boards SET total_threads = :total_threads WHERE board_id = :board_id");
+                $stmt->bindParam(':board_id', $boardId);
+                $stmt->bindParam(':total_threads', $totalThreads);
+                $stmt->execute();
+                return $totalThreads;
         }
 }

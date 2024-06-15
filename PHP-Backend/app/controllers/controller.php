@@ -73,4 +73,26 @@ class Controller
         }
         return $object;
     }
+    function createObjectFromPostedArrayJson($className)
+{
+    $json = file_get_contents('php://input');
+    $dataArray = json_decode($json);
+
+    $objects = [];
+    foreach ($dataArray as $data) {
+        $object = new $className();
+        foreach ($data as $key => $value) {
+            if(is_object($value)) {
+                continue;
+            }
+            // Convert the key to camelCase to match the setter method name
+            $method = 'set' . str_replace('_', '', ucwords($key, '_'));
+            if (method_exists($object, $method)) {
+                $object->{$method}($value);
+            }
+        }
+        $objects[] = $object;
+    }
+    return $objects;
+}
 }

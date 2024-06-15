@@ -13,6 +13,7 @@
           :key="board.board_id"
           :board="board"
           @update="update"
+          @updateTotals="handleUpdateTotals"
         />
     </section>
 </template>
@@ -31,8 +32,10 @@ export default {
       boards: []
     }
   },
-  created() {
-    this.update()
+  mounted() {
+    this.update().then(() => {
+        this.handleUpdateTotals(this.boards);
+    });
   },
   methods: {
     async update() {
@@ -42,7 +45,20 @@ export default {
       } catch (error) {
       console.log(error)
       }
-    }
+    },
+    handleUpdateTotals(boards) {
+      boards.forEach((board) => {
+        axios.put(`/board/${board.board_id}/totalthreads`)
+        .catch(error => {
+            console.error(error);
+        });
+
+        axios.put(`/board/${board.board_id}/totalmessages`)
+        .catch(error => {
+            console.error(error);
+        });
+});
+  }
   }
 }
 </script>

@@ -32,7 +32,12 @@ class BoardService {
     public function updateThreadCount($boardId) {
         // retrieve data
         $repository = new BoardRepository();
-        $repository->updateThreadCount($boardId);
+        return $repository->updateThreadCount($boardId);
+    }
+    public function updatePostCount($boardId) {
+        // retrieve data
+        $repository = new BoardRepository();
+        return $repository->updatePostCount($boardId);
     }
     public function insert($board) {
         // retrieve data

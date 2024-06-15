@@ -13,6 +13,6 @@ class ThreadTagService {
     public function addTagToThread($thread_tag) {
         // retrieve data
         $repository = new ThreadTagRepository();
-        $repository->addTagToThread($thread_tag->getThreadId(), $thread_tag->getTagId());     
+        return $repository->addTagToThread($thread_tag->getThreadId(), $thread_tag->getTagId());     
     }
 }

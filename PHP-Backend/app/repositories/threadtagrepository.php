@@ -32,13 +32,15 @@ function addTagToThread(int $thread_id, int $tag_id)
                 $stmt->bindParam(':thread_id', $thread_id);
                 $stmt->bindParam(':tag_id', $tag_id);
                 $stmt->execute();
+                $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\ThreadTag');
+                return $stmt->fetch();
 
                 if ($stmt->rowCount() == 0) {
-                        throw new Exception("No tags added to thread");
+                        throw new \Exception("No tags added to thread");
                     }
         }
         catch (PDOException $e) {
-                throw new Exception("Error adding tag to thread: " . $e->getMessage());
+                throw new \Exception("Error adding tag to thread: " . $e->getMessage());
         }
 }
 }

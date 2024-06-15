@@ -51,7 +51,7 @@ class ThreadRepository extends Repository
                 $stmt->bindParam(':thread_id', $threadId);
                 $stmt->execute();
 
-                $stmt->setFetchMode(PDO::FETCH_CLASS, 'Thread');
+                $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\Thread');
                 $threads = $stmt->fetch();
 
                 return $threads;
@@ -64,9 +64,17 @@ class ThreadRepository extends Repository
                 $stmt->bindParam(':title', $title);
                 $stmt->bindParam(':first_post', $first_post);
                 $stmt->bindParam(':user_id', $user_id);
+                $stmt->execute();
 
-                return $stmt->execute();
-                //return $this->connection->lastInsertId();
+                $lastInsertId = $this->connection->lastInsertId();
+
+                $stmt = $this->connection->prepare("SELECT * FROM threads WHERE thread_id = :thread_id");
+                $stmt->bindParam(':thread_id', $lastInsertId);
+                $stmt->execute();
+                $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\Thread');
+                $thread = $stmt->fetch();
+
+                return $thread;
         }
         function updateReplies($threadId)
         {

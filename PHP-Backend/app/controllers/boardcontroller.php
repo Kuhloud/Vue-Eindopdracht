@@ -41,14 +41,6 @@ class BoardController extends Controller {
         
 
     }
-    public function getBoardIdByName($name) {  
-
-        $board = $this->boardService->getBoardIdByName($name);
-        $this->respond($board);
-
-        // $threads = $this->threadService->getThreads($board->getId());
-        // $this->displayView($threads);
-    }
     public function getBoardById($id) {  
 
         $board = $this->boardService->getBoardById($id);
@@ -57,8 +49,13 @@ class BoardController extends Controller {
         // $threads = $this->threadService->getThreads($board->getId());
         // $this->displayView($threads);
     }
-    public function updateThreadCount($id) {
-        $this->boardService->updateThreadCount($id);
-        // $this->respond($board);
+    public function updateThreadCount($board_id) {
+        $totalThreads = $this->boardService->updateThreadCount($board_id);
+        $this->respond($totalThreads);
+    }
+    
+    public function updatePostCount($board_id) {
+        $totalPosts = $this->boardService->updatePostCount($board_id);
+        $this->respond($totalPosts);
     }
 }

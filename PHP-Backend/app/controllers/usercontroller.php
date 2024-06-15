@@ -38,7 +38,7 @@ class UserController extends Controller
 
         $this->respond([
             "token" => $jwt,
-            "id" => $user->getUserId(),
+            "user_id" => $user->getUserId(),
             "username" => $user->getUsername()
         ]);
 
@@ -71,7 +71,7 @@ class UserController extends Controller
 
         $this->respond([
             "token" => $jwt,
-            "id" => $user->getUserId(),
+            "user_id" => $user->getUserId(),
             "username" => $user->getUsername()
         ]);
     }

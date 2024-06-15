@@ -10,6 +10,7 @@ export const userStore = defineStore('store', {
   getters: {
     isLoggedIn: (state) => state.token != '',
     getUserId: (state) => state.user_id,
+    getUsername: (state) => state.username,
   },
   actions: {
     signup(username, email, password) {
@@ -38,7 +39,6 @@ export const userStore = defineStore('store', {
             password: password
           })
           .then((res) => {
-            console.log(res)
             this.setUserData(res.data)
             resolve()
           })
@@ -48,17 +48,17 @@ export const userStore = defineStore('store', {
     setUserData(response)
     {
       localStorage.setItem('token', response.token);
-      localStorage.setItem('userid', response.id);
+      localStorage.setItem('user_id', response.user_id);
       localStorage.setItem('username', response.username);
       this.token = response.token;
-      this.user_id = response.id;
+      this.user_id = response.user_id;
       this.username = response.username;
     },
     autologin() {
       if (localStorage['token']) {
         try {
           this.token = localStorage.getItem('token');
-          this.user_id = localStorage.getItem('userId');
+          this.user_id = localStorage.getItem('user_id');
           this.username = localStorage.getItem('username');
           axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
         } catch (error) {
@@ -78,7 +78,7 @@ export const userStore = defineStore('store', {
       this.user_id = 0;
       this.username = '';
       localStorage.removeItem('token');
-      localStorage.removeItem('userId');
+      localStorage.removeItem('user_id');
       localStorage.removeItem('username');
       axios.defaults.headers.common['Authorization'] = '';
     }

@@ -20,15 +20,17 @@ $router->setNamespace('Controllers');
 // routes for the board endpoint
 $router->get('/boards', 'BoardController@getBoards');
 $router->get('/board/([^/]+)', 'BoardController@getBoardByName');
+$router->put('/board/(\d+)/totalthreads', 'BoardController@updateThreadCount');
+$router->put('/board/(\d+)/totalmessages', 'BoardController@updatePostCount');
 
 // routes for the thread endpoint
 $router->get('/board/([^/]+)/threads', 'ThreadController@getThreadsByBoardName');
 $router->post('/thread', 'ThreadController@createThread');
 $router->get('/thread/([^/]+)', 'ThreadController@getThreadByTitle');
-$router->get('/thread/([^/]+)', 'ThreadController@getThreadByTitle');
 
 // routes for the tag endpoint
-$router->get('/tags', 'TagController@addTags');
+$router->post('/tag', 'TagController@addTag');
+$router->post('/threadtag/(\d+)', 'ThreadTagController@addThreadTag');
 
 // routes for the post endpoint
 $router->get('/thread/(\d+)/posts', 'PostController@getPostsByThreadId');

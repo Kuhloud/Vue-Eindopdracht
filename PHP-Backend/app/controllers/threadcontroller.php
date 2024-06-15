@@ -11,12 +11,6 @@ class ThreadController extends Controller {
     function __construct() {
         $this->threadService = new ThreadService();
     }
-
-    // router maps this to /article and /article/index automatically
-    function currentThread($thread)
-    {
-        $_SESSION['currentthread'] = $thread;
-    }
     public function createthread() {
         
         try

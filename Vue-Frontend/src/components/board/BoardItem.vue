@@ -28,11 +28,11 @@ export default {
   props: {
     board: Object,
   },
-  
   methods: {
     goToBoard(board_name, board_id) {
       this.$router.push(`/board/${board_name}.${board_id}`);
-    }
+    },
+
   }
 }
 </script>

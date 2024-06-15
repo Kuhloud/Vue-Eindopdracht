@@ -21,29 +21,37 @@ function existingTag($tag_name) {
         }
 }
 
-function insert($tag)
+function insert($tag_name)
 {
-        try
-        {
-                $stmt = $this->connection->prepare("INSERT into tags (tag_name) VALUES (:tag_name)");
-                $stmt->bindParam(':tag_name', $tag->tag_name);
-                //return $stmt->execute(); 
-                return $this->connection->lastInsertId();
-                
-        }
-        catch (PDOException $e) 
-        {
-                echo "Error: " . $e->getMessage();
-        }
+    try
+    {
+        $stmt = $this->connection->prepare("INSERT into tags (tag_name) VALUES (:tag_name)");
+        $stmt->bindParam(':tag_name', $tag_name);
+        $stmt->execute(); 
+        $lastInsertId = $this->connection->lastInsertId();
+
+        $stmt = $this->connection->prepare("SELECT * FROM tags WHERE tag_id = :tag_id ");
+        $stmt->bindParam(':tag_id', $lastInsertId);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\Tag');
+        $tag = $stmt->fetch();
+
+        return $tag;
+    }
+    catch (PDOException $e) 
+    {
+        error_log("Error: " . $e->getMessage()); // Log the error message
+        return false; // Return false or some other value indicating failure
+    }
 }
-function getTagIdByName($tag)
+function getTagByName($tag_name)
 {
-        $stmt = $this->connection->prepare("SELECT tag_id FROM tags WHERE tag_name = :tag_name");
-        $stmt->bindParam(':tag_name', $tag->tag_name);
+        $stmt = $this->connection->prepare("SELECT * FROM tags WHERE tag_name = :tag_name");
+        $stmt->bindParam(':tag_name', $tag_name);
         $stmt->execute();
 
-        $stmt->setFetchMode(PDO::FETCH_COLUMN, 0);
-        $tagId = $stmt->fetch();
-        return $tagId;
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\Tag');
+        $tag = $stmt->fetch();
+        return $tag;
 }
 }

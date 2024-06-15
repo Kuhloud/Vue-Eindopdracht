@@ -13,19 +13,15 @@ class ThreadTagController extends Controller
     }
 
 
-    private function addThreadTags(int $thread_id, array $tags)
+    public function addThreadTag($thread_id)
     {
-        $threadTags = [];
-        foreach ($tags as $tag) 
-        {
-            $tag = $this->createObjectFromPostedJson("Models\\ThreadTag");
-            $this->threadTagService->addTagToThread($threadTag);
-            $threadTags[] = $threadTag;
-        }
-        if (empty($threadTags)) {
-            return;
-        }
-        return $threadTags;
+        $threadTag = $this->createObjectFromPostedJson("Models\\ThreadTag");
+        $threadTag->setThreadId($thread_id);
+        $setThreadTag = $this->threadTagService->addTagToThread($threadTag);
+        $this->respond([
+            "thread_id" => $setThreadTag->getThreadId(),
+            "tag_id" => $setThreadTag->getTagId()
+        ]);
     }
     
     private function getTags(int $thread_id)
@@ -40,8 +36,9 @@ class ThreadTagController extends Controller
             header("Content-type: application/json");
             echo json_encode($tags);
         } 
-        catch (Exception $e) {
-            echo json_encode(['error' => $e->getMessage()]);
+        catch (\Exception $e) 
+        {
+            $this->respondWithError(400, $e->getMessage());
         }
     }
     private function checkRequiredFields(string $threadTags)

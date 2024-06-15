@@ -11,6 +11,6 @@ class TagService {
         if (!$repository->existingTag($tag->getTagName())) {
             return $repository->insert($tag->getTagName()); 
         }
-        return $repository->getTagIdByName($tag->getTagName());
+        return $repository->getTagByName($tag->getTagName());
     }
 }
