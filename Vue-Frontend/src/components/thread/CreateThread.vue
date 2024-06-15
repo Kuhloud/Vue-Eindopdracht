@@ -91,7 +91,7 @@ export default {
         for (const tag of tags) {
             const tagResponse = await axios.post('/tag', { tag_name: tag });
             this.displayResponse(tagResponse);
-            const threadTagResponse = await axios.post(`/threadtag/${response.data.thread_id}`, tagResponse.data.tag_id );
+            const threadTagResponse = await axios.post(`/threadtag/${response.data.thread_id}`, tagResponse.data);
             this.displayResponse(threadTagResponse);
           }
       }

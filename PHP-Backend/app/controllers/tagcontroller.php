@@ -17,10 +17,10 @@ class TagController extends Controller
         {
             $tag = $this->createObjectFromPostedJson("Models\\Tag");
             $threadTag = $this->tagService->insert($tag);
-            $this->respond($threadTag);
-            // $this->respond([
-            //     "tag_id" => $threadTag->getTagId(),
-            // ]);
+            //$this->respond($threadTag);
+            $this->respond([
+                "tag_id" => $threadTag->getTagId(),
+            ]);
         }
         catch (\Exception $e)
         {
