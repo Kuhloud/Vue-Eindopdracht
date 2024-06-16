@@ -17,18 +17,6 @@ class BoardService {
         $board = $repository->getBoardById($boardId);
         return $board;
     }
-    public function getBoardIdByName($boardName) {
-        // retrieve data
-        $repository = new BoardRepository();
-        $boardId = $repository->getBoardIdByName($boardName);
-        return $boardId;
-    }
-    public function getBoardByName($boardName) {
-        // retrieve data
-        $repository = new BoardRepository();
-        $boardId = $repository->getBoardByName($boardName);
-        return $boardId;
-    }
     public function updateThreadCount($boardId) {
         // retrieve data
         $repository = new BoardRepository();

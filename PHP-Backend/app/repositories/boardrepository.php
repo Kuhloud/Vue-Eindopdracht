@@ -38,36 +38,10 @@ class BoardRepository extends Repository
                 $stmt->bindParam(':boardId', $boardId);
                 $stmt->execute();
 
-                $stmt->setFetchMode(PDO::FETCH_CLASS, 'Board');
+                $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\Board');
                 $board = $stmt->fetch();
 
                 return $board;
-
-        }
-        function getBoardIdByName(string $boardName)
-        {
-
-                $stmt = $this->connection->prepare("SELECT board_id FROM boards WHERE board_name = :boardName");
-                $stmt->bindParam(':boardName', $boardName);
-                $stmt->execute();
-
-                $stmt->setFetchMode(PDO::FETCH_CLASS, 'Board');
-                $boardId = $stmt->fetch();
-
-                return $boardId;
-
-        }
-        function getBoardByName(string $boardName)
-        {
-
-                $stmt = $this->connection->prepare("SELECT * FROM boards WHERE board_name = :boardName");
-                $stmt->bindParam(':boardName', $boardName);
-                $stmt->execute();
-
-                $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\Board');
-                $boardId = $stmt->fetch();
-
-                return $boardId;
 
         }
         function insert($board)

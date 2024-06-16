@@ -31,23 +31,12 @@ class BoardController extends Controller {
     
 
     }
-    public function getBoardByName($name) {  
-
-        $board = $this->boardService->getBoardByName($name);
-        $this->respond($board);
-
-        // $threads = $this->threadService->getThreads($board->getId());
-        // $this->displayView($threads);
-        
-
-    }
     public function getBoardById($id) {  
 
         $board = $this->boardService->getBoardById($id);
         $this->respond($board);
 
-        // $threads = $this->threadService->getThreads($board->getId());
-        // $this->displayView($threads);
+
     }
     public function updateThreadCount($board_id) {
         $totalThreads = $this->boardService->updateThreadCount($board_id);

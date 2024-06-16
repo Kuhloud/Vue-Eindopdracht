@@ -41,25 +41,4 @@ class ThreadTagController extends Controller
             $this->respondWithError(400, $e->getMessage());
         }
     }
-    private function checkRequiredFields(string $threadTags)
-    {
-        $requiredFields = ['thread_id', 'tags'];
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($threadTags->$field)) 
-            {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (!empty($missingFields)) {
-            echo json_encode([
-            "status" => "error", 
-            "message" => "Missing required fields", 
-            "missing_fields" => $missingFields
-            ], JSON_THROW_ON_ERROR);
-        return;
-        }
-    }
 }

@@ -33,26 +33,4 @@ class TagController extends Controller
         $tags = $this->tagService->getTagsByThreadId($threadId);
         $this->respond($tags);
     }
-    
-    private function checkRequiredFields(string $newThread)
-    {
-        $requiredFields = ['thread_id, tags'];
-        $missingFields = [];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($newThread->$field)) 
-            {
-                $missingFields[] = $field;
-            }
-        }
-
-        if (!empty($missingFields)) {
-            echo json_encode([
-            "status" => "error", 
-            "message" => "Missing required fields", 
-            "missing_fields" => $missingFields
-            ], JSON_THROW_ON_ERROR);
-        return;
-        }
-    }
 }

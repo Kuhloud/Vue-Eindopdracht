@@ -22,7 +22,7 @@ $router->setNamespace('Controllers');
 
 // routes for the board endpoint
 $router->get('/boards', 'BoardController@getBoards');
-$router->get('/board/([^/]+)', 'BoardController@getBoardById');
+$router->get('/board/(\d+)', 'BoardController@getBoardById');
 $router->put('/board/(\d+)/totalthreads', 'BoardController@updateThreadCount');
 $router->put('/board/(\d+)/totalmessages', 'BoardController@updatePostCount');
 

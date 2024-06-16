@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     goToBoard(board_name, board_id) {
-      this.$router.push(`/board/${board_name}.${board_id}`);
+      this.$router.push(`/board/${board_name}.${Number(board_id)}`);
     },
   }
 }
