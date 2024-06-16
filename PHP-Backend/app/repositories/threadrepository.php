@@ -19,11 +19,11 @@ class ThreadRepository extends Repository
                 return $threads;
 
         }
-        function getThreadsByBoardName($board_name)
+        function getThreadsByBoardId($board_id)
         {
 
-                $stmt = $this->connection->prepare("SELECT * FROM threads WHERE board_id IN (SELECT board_id FROM boards WHERE board_name = :board_name)");
-                $stmt->bindParam(':board_name', $board_name);
+                $stmt = $this->connection->prepare("SELECT * FROM threads WHERE board_id = :board_id");
+                $stmt->bindParam(':board_id', $board_id);
                 $stmt->execute();
 
                 $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\Thread');

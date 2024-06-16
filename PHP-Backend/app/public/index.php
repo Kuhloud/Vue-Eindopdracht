@@ -22,12 +22,12 @@ $router->setNamespace('Controllers');
 
 // routes for the board endpoint
 $router->get('/boards', 'BoardController@getBoards');
-$router->get('/board/([^/]+)', 'BoardController@getBoardByName');
+$router->get('/board/([^/]+)', 'BoardController@getBoardById');
 $router->put('/board/(\d+)/totalthreads', 'BoardController@updateThreadCount');
 $router->put('/board/(\d+)/totalmessages', 'BoardController@updatePostCount');
 
 // routes for the thread endpoint
-$router->get('/board/([^/]+)/threads', 'ThreadController@getThreadsByBoardName');
+$router->get('/board/(\d+)/threads', 'ThreadController@getThreadsByBoardId');
 $router->post('/thread', 'ThreadController@createThread');
 $router->get('/thread/(\d+)', 'ThreadController@getThreadById');
 $router->put('/thread/(\d+)/totalreplies', 'ThreadController@updatePostCount');

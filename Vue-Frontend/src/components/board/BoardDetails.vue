@@ -47,9 +47,9 @@ export default {
   methods: {
     async update() {
       try {
-        const response = await axios.get(`/board/${this.board_name}`);
+        const response = await axios.get(`/board/${this.board_id}`);
         this.board = response.data;
-        const threadResponse = await axios.get(`/board/${this.board_name}/threads`);
+        const threadResponse = await axios.get(`/board/${this.board_id}/threads`);
         this.threads = threadResponse.data;
       } catch (error) {
         console.log(error);

@@ -9,10 +9,10 @@ class ThreadService {
         $repository = new ThreadRepository();
         return $repository->getAllThreads();
     }
-    public function getThreadsByBoardName($board_name) {
+    public function getThreadsByBoardId($board_id) {
         // retrieve data
         $repository = new ThreadRepository();
-        $threads = $repository->getThreadsByBoardName($board_name);
+        $threads = $repository->getThreadsByBoardId($board_id);
         return $threads;
     }
     public function getThreadById($threadId) {

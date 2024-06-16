@@ -35,9 +35,9 @@ class ThreadController extends Controller
         $totalPosts = $this->threadService->updateReplies($thread_id);
         $this->respond($totalPosts);
     }
-    public function getThreadsByBoardName($name)
+    public function getThreadsByBoardId($board_id)
     {
-        $threads = $this->threadService->getThreadsByBoardName($name);
+        $threads = $this->threadService->getThreadsByBoardId($board_id);
         $this->respond($threads);
     }
     public function getThreadById($threadId)
