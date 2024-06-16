@@ -1,6 +1,7 @@
 # Vue-Eindopdracht
 
-//Member : User
+Gebruikers
+// Member
 Username: TestMan1
 Email: Test_Man@hotmail.com
 Password: TestPassword
@@ -12,6 +13,16 @@ Password: normal
 Username: test
 Email: test@gmail.com
 Password: test
+
+// Moderators
+Username: mawd
+Email: mod@gmail.com
+Password: mod
+
+// Administrators
+Username: ad
+Email: admin@gmail.com
+Password: admin
 
 // Instructies PHP-Backend
 in Vue-Eindopdracht, in terminal, cd ./PHP-Backend/ (gebruik tab)

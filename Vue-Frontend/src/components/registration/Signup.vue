@@ -10,19 +10,19 @@
               <section class="mb-3">
                 <label for="inputUsername" class="form-label">Username</label>
                 <input id="inputUsername" type="text" v-model="username" class="form-control" required/>
-                <small class="form-text text-muted">Required</small>
+                <small class="form-text text-danger">Required</small>
               </section>
               <section class="mb-3">
                 <label for="inputEmail" class="form-label">Enter Email Address</label>
                 <input type="text" v-model="email" class="form-control" id="inputEmail" required/>
-                <small class="form-text text-muted">Required</small>
+                <small class="form-text text-danger">Required</small>
               </section>
               <section class="mb-3">
                 <label for="inputPassword" class="form-label">Password</label>
                 <input type="password" v-model="password" class="form-control" id="inputPassword" required/>
-                <small class="form-text text-muted">Required</small>
+                <small class="form-text text-danger">Required</small>
               </section>
-              <button type="button" class="btn btn-primary" @click="signup">Submit</button>
+              <button type="button" class="btn btn-primary" @click="signup">Signup</button>
             </form>
           </section>
         </section>

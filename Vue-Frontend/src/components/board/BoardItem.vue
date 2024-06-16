@@ -32,7 +32,6 @@ export default {
     goToBoard(board_name, board_id) {
       this.$router.push(`/board/${board_name}.${board_id}`);
     },
-
   }
 }
 </script>

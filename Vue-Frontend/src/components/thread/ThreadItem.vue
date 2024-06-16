@@ -5,8 +5,8 @@
       <article class="card-body d-flex justify-content-between align-items-center">
         <section class="d-flex flex-column align-items-start">
           <h4 class="card-title">{{ thread.title }}</h4>
-          <article v-if="this.tags.length > 0" class="d-flex ">
-            <p class="card-text">Tags:</p>
+          <article v-if="tags != null" class="d-flex ">
+
             <tag-item v-for="tag in tags" :key="tag.tag_id" :tag="tag" />
           </article>
         </section>
@@ -17,15 +17,21 @@
           </dl>
         </section>
       </article>
+      <button v-if="store.isStaff" type="submit" @click="deleteThread" class="btn btn-primary">Delete Thread</button>
     </section>
   </a>
 </template>
 <script>
 import axios from '../../axios-auth'
 import TagItem from '../tag/TagItem.vue'
+import { userStore } from '../../stores/userStore'
 
 export default {
   name: 'ThreadItem',
+  setup() {
+    const store = userStore()
+    return { store }
+  },
   components: {
     TagItem
   },
@@ -42,9 +48,9 @@ export default {
   },
   methods: {
     goToThread(thread_id, thread_title) {
-      this.$router.push(`/thread/${thread_title}.${thread_id}`)
+      this.$router.push(`/thread/${thread_title}.${Number(thread_id)}`)
     },
-    getThreadTags(thread_id) {
+    async getThreadTags(thread_id) {
       axios
         .get(`/tags/${thread_id}`)
         .then((res) => {
@@ -53,6 +59,9 @@ export default {
         .catch((error) => {
           console.error(error);
         });
+    },
+    deleteThread() {
+      this.$emit('deleteThread', this.thread.thread_id)
     },
   }
 

@@ -33,4 +33,17 @@ class PostRepository extends Repository
 
         return $posts;
     }
+    function deletePost($postId)
+    {
+        $stmt = $this->connection->prepare("DELETE FROM posts WHERE post_id = :post_id");
+        $stmt->bindParam(':post_id', $postId);
+        $stmt->execute();
+    }
+    function updatePost($postId, $message)
+    {
+        $stmt = $this->connection->prepare("UPDATE posts SET message = :message WHERE post_id = :post_id");
+        $stmt->bindParam(':message', $message);
+        $stmt->bindParam(':post_id', $postId);
+        $stmt->execute();
+    }
 }

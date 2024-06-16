@@ -9,8 +9,7 @@
     </article>
   </section>
   <section>
-    <thread-item v-for="thread in threads" :key="thread.thread_id" :thread="thread" @update="update"
-      @updateTotals="handleUpdateReplies" />
+    <thread-item v-for="thread in threads" :key="thread.thread_id" :thread="thread" @deleteThread="deleteThread" />
   </section>
 </template>
 <script>
@@ -46,18 +45,15 @@ export default {
     }, 5000);
   },
   methods: {
-    update() {
-      return axios.get(`/board/${this.board_name}`)
-        .then(response => {
-          this.board = response.data;
-          return axios.get(`/board/${this.board_name}/threads`);
-        })
-        .then(threadResponse => {
-          this.threads = threadResponse.data;
-        })
-        .catch(error => {
-          console.log(error);
-        });
+    async update() {
+      try {
+        const response = await axios.get(`/board/${this.board_name}`);
+        this.board = response.data;
+        const threadResponse = await axios.get(`/board/${this.board_name}/threads`);
+        this.threads = threadResponse.data;
+      } catch (error) {
+        console.log(error);
+      }
     },
     handleUpdateReplies(threads) {
       threads.forEach((thread) => {
@@ -71,6 +67,16 @@ export default {
       this.$router.push({
         path: `/board/${this.board_name}.${this.board_id}/createthread`
       })
+    },
+    deleteThread(thread_id) {
+      axios
+        .delete(`/thread/${thread_id}/delete`)
+        .then(() => {
+          console.log('Post deleted');
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
   }
 }

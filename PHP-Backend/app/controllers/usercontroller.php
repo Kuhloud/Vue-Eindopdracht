@@ -31,7 +31,6 @@ class UserController extends Controller
         // if the method returned false, the username and/or password were incorrect
         if (!$user) {
             $this->respondWithError(401, "Invalid Username or password");
-            return;
         }
 
         $jwt = $this->generateJwt($user);
@@ -39,7 +38,7 @@ class UserController extends Controller
         $this->respond([
             "token" => $jwt,
             "user_id" => $user->getUserId(),
-            "username" => $user->getUsername()
+            "username" => $user->getUsername(),
         ]);
 
     }
@@ -49,11 +48,9 @@ class UserController extends Controller
         $logindata = $this->createObjectFromPostedJson("Models\User");
         if (!$this->userService->isValidEmail($logindata->getEmail())) {
             $this->respondWithError(400, "Email is not valid");
-            return;
         }
         if (!$logindata->getUsername() || !$logindata->getPassword()) {
             $this->respondWithError(400, "Enter Username and/or password");
-            return;
         }
 
         // get user from db

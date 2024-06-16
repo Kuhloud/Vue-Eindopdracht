@@ -31,4 +31,22 @@ class PostController extends Controller {
         
         }
     }
+    public function deletePost($postId)
+    {
+        $this->postService->deletePost($postId);
+        $this->respond([
+            "status" => "success",
+            "message" => "Post deleted"
+        ]);
+    }
+    public function editPost($postId)
+    {
+        $editedPost = $this->createObjectFromPostedJson("Models\\Post");
+
+        $this->postService->editPost($postId, $editedPost->getMessage());
+        $this->respond([
+            "status" => "success",
+            "message" => $editedPost->getMessage()
+        ]);
+    }
 }

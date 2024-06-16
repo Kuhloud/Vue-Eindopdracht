@@ -15,4 +15,14 @@ class PostService {
         $posts = $repository->getPostsByThreadId($threadId);
         return $posts;
     }
+    public function deletePost($postId) {
+        // retrieve data
+        $repository = new PostRepository();
+        return $repository->deletePost($postId);
+    }
+    public function editPost($postId, $message) {
+        // retrieve data
+        $repository = new PostRepository();
+        return $repository->updatePost($postId, $message);
+    }
 }

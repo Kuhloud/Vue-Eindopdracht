@@ -12,7 +12,7 @@
               placeholder="Enter thread title">
           </section>
           <section class="mb-3">
-            <textarea class="form-control" v-model="thread.firstPost" id="firstPost" rows="6"></textarea>
+            <textarea class="form-control" v-model="thread.firstPost" id="firstPost" rows="6" placeholder="Write your reply..."></textarea>
           </section>
           <section class="mb-3">
             <label for="tags" class="form-label">Tags:</label>

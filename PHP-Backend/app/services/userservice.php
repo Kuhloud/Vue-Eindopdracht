@@ -13,7 +13,12 @@ class UserService {
     }
 
     public function getUser($username, $password) {
-        return $this->repository->getUser($username, $password);
+        $user = $this->repository->getUser($username, $password);
+        if (!$user || !$this->repository->verifyPassword($password, $user->getPassword())) {
+            return false;
+        }
+        $user->setPassword("");
+        return $user;
     }
     public function insert($username, $email, $plainPassword) {
         

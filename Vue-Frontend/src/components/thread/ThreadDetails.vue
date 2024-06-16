@@ -17,8 +17,8 @@
       <section class="card-body">
         <form id="newPost" onsubmit="event.preventDefault()">
           <section class="mb-3">
-            <textarea class="form-control" v-model="post.message" id="firstPost"
-              placeholder="Write your reply...">rows="6"></textarea>
+            <textarea class="form-control" v-model="post.message" id="firstPost" placeholder="Write your reply..."
+              rows="6"></textarea>
           </section>
           <button type="submit" @click="newPost" class="btn btn-primary">Post Reply</button>
         </form>
@@ -59,10 +59,11 @@ export default {
       tags: [],
     }
   },
-  async mounted() {
+  async created() {
     await this.getPosts();
     await this.getThreadTags(this.thread_id);
-
+  },
+  async mounted() {
     setInterval(() => {
       this.getPosts();
     }, 5000);
@@ -73,17 +74,21 @@ export default {
         const response = await axios.get(`/thread/${this.thread_title}`)
         const thread = response.data
         const postResponse = await axios.get(`/thread/${thread.thread_id}/posts`)
-        const updatedPostArray = await Promise.all(postResponse.data.map(async post => {
-          const userResponse = await axios.get(`/user/${post.user_id}`)
-          return { ...post, username: userResponse.data.username }
-        }))
-        this.posts = updatedPostArray
+        if (Array.isArray(postResponse.data)) {
+          const updatedPostArray = await Promise.all(postResponse.data.map(async post => {
+            const userResponse = await axios.get(`/user/${post.user_id}`)
+            return { ...post, username: userResponse.data.username }
+          }))
+          this.posts = updatedPostArray
+        } else {
+          console.error('postResponse.data is not an array:', postResponse.data);
+        }
       }
       catch (error) {
         console.error(error)
       }
     },
-    getThreadTags(thread_id) {
+    async getThreadTags(thread_id) {
       axios
         .get(`/tags/${thread_id}`)
         .then((res) => {

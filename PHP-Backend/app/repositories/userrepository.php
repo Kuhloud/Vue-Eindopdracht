@@ -20,15 +20,6 @@ class UserRepository extends Repository
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\User');
             $user = $stmt->fetch();
 
-            // verify if the password matches the hash in the database
-            $result = $this->verifyPassword($password, $user->getPassword());
-
-            if (!$result)
-            {
-                return false;
-            }
-            // do not pass the password hash to the caller
-            $user->setPassword("");
 
             return $user;
         } catch (PDOException $e) {
@@ -94,8 +85,8 @@ class UserRepository extends Repository
     }
 
     // verify the password hash
-    function verifyPassword($input, $hash)
+    function verifyPassword($password, $hashedPassword)
     {
-        return password_verify($input, $hash);
+        return password_verify($password, $hashedPassword);
     }
 }

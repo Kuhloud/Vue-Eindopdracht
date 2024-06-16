@@ -1,9 +1,16 @@
 <?php
 namespace Models;
-abstract class User_role {
 
-private int $role_id;
-private string $role_name;
+enum UserRole: int{
+    case Member = 1;
+    case Moderator = 2;
+    case Administrator = 3;
 
-
+    function getUserRole(int $role_id): string {
+        return match($role_id) {
+            UserRole::Member => 'Member',
+            UserRole::Moderator => 'Moderator',
+            UserRole::Administrator => 'Administrator',
+        };
+    }
 }

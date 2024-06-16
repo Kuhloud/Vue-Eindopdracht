@@ -1,6 +1,6 @@
 <template>
     <section class="badge rounded-pill d-inline">
-        <p> {{tag.tag_name}} </p>
+        {{tag.tag_name}} 
     </section>
 </template>
 <script>
