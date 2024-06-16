@@ -44,7 +44,8 @@ Password: admin
 
     4. REST API: Applicatie filtert automatisch van het maken van een account, en het inloggen. Verder bij posts zou het de bedoeling zijn dat 'Moderators' en 'Administrators' ze verwijderen. Ook zijn de repositories zo gemaakt om SQL injections te voorkomen
 
-    5. Authentication: Geef aan of je Role Based Access Control hebt geïmplementeerd, verwijs naar de specifieke code waar dit aan kan worden gezien. Role Based Access Control is geïmplementeerd in PHP-Backend\app\public\index.php.
+    5. Authentication: Geef aan of je Role Based Access Control hebt geïmplementeerd, verwijs naar de specifieke code waar dit aan kan worden gezien. Role Based Access Control is geïmplementeerd in PHP-Backend\app\public\index.php. Er is ook een .env met de JWT_GENERATED_KEY
+
 
 
 
