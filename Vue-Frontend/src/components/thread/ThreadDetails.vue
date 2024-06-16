@@ -29,16 +29,14 @@
 <script>
 import axios from '../../axios-auth'
 import { userStore } from '../../stores/userStore'
-import { tagStore } from '../../stores/tagStore'
 import PostItem from '../post/PostItem.vue'
 import TagItem from '../tag/TagItem.vue'
 
 export default {
   name: 'ThreadDetails',
   setup() {
-    const uStore = userStore();
-    const tStore = tagStore();
-    return { uStore, tStore }
+    const store = userStore();
+    return { store}
   },
   components: {
     PostItem,
@@ -54,7 +52,7 @@ export default {
       post: {
         threadId: this.thread_id,
         message: '',
-        userId: this.uStore.getUserId,
+        userId: this.store.getUserId,
       },
       tags: [],
     }

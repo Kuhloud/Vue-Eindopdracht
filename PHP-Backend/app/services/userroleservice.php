@@ -15,7 +15,5 @@ class UserRoleService {
     public function getRoleById($user_id) {
         return $this->repository->getRoleById($user_id);
     }
-    public function deletePost($user_id, $role_id) {
-        return $this->repository->insert($user_id, $role_id);
-    }
+    
 }
