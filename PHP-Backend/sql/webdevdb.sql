@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Gegenereerd op: 15 jun 2024 om 16:50
+-- Gegenereerd op: 16 jun 2024 om 18:21
 -- Serverversie: 11.1.3-MariaDB-1:11.1.3+maria~ubu2204
 -- PHP-versie: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `developmentdb`
+-- Database: `webdevdb`
 --
 
 -- --------------------------------------------------------
@@ -44,7 +44,7 @@ INSERT INTO `boards` (`board_id`, `board_name`, `board_description`, `total_thre
 (2, 'Off-Topic', 'Memes, muziek, en andere ongerelateerde onderwerpen.', 0, 0),
 (3, 'ChatGPT', 'Discussies over hoe je kan slagen met zo min mogelijk moeite.', 0, 0),
 (4, 'Web-Design-Haat', 'Dit is letterlijk Jojo\'s Nineteen Eighty-Four.', 0, 0),
-(5, 'Test-Berichten', 'Hier kun je test berichten posten.', 34, 5);
+(5, 'Test-Berichten', 'Hier kun je test berichten posten.', 31, 4);
 
 -- --------------------------------------------------------
 
@@ -65,11 +65,10 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`post_id`, `thread_id`, `user_id`, `message`, `posted_at`) VALUES
-(1, 2, 1, 'Zesty', '2024-04-07 18:07:45'),
-(2, 3, 1, 'as', '2024-04-07 18:12:15'),
-(3, 4, 1, 'xcxc', '2024-04-07 21:14:51'),
+(1, 2, 1, 'REALLY', '2024-04-07 18:07:45'),
 (4, 2, 2, 'Hesty', '2024-06-15 14:52:14'),
-(5, 2, 2, 'Resty', '2024-06-15 15:03:55');
+(5, 2, 2, 'Resty', '2024-06-15 15:03:55'),
+(6, 35, 1, 'This kinda sucks', '2024-06-16 18:16:34');
 
 -- --------------------------------------------------------
 
@@ -98,7 +97,8 @@ INSERT INTO `tags` (`tag_id`, `tag_name`) VALUES
 (9, 'Bericht'),
 (10, 'Werkt'),
 (11, 'testing'),
-(12, 'testinging');
+(12, 'testinging'),
+(13, 'Life');
 
 -- --------------------------------------------------------
 
@@ -123,9 +123,6 @@ CREATE TABLE `threads` (
 INSERT INTO `threads` (`thread_id`, `board_id`, `title`, `first_post`, `replies`, `created_at`, `user_id`) VALUES
 (1, 5, 'TestTitle', 'TestPost', 0, '2024-04-07 18:01:21', 1),
 (2, 5, 'Testy', 'Zesty', 3, '2024-04-07 18:07:45', 1),
-(3, 5, 'asd', 'as', 1, '2024-04-07 18:12:15', 1),
-(4, 5, 'Jsavs', 'xcxc', 1, '2024-04-07 21:14:51', 1),
-(5, 5, 'dfsa', 'wer', 0, '2024-06-12 14:24:46', 1),
 (6, 5, 'weds', 'wer', 0, '2024-06-12 14:24:47', 1),
 (7, 5, 'Het WERKT', 'Lekker', 0, '2024-06-12 14:26:36', 1),
 (8, 5, 'Tag Test', 'Testings', 0, '2024-06-14 15:43:46', 1),
@@ -142,7 +139,6 @@ INSERT INTO `threads` (`thread_id`, `board_id`, `title`, `first_post`, `replies`
 (19, 5, 'tags gefixt', 'Ik begrijp nu waarom, denk ik', 0, '2024-06-15 07:56:18', 1),
 (20, 5, 'Tehest', 'Tefs', 0, '2024-06-15 08:03:17', 1),
 (21, 5, 'Insom test', 'Insomnia', 0, '2024-06-15 09:41:49', 1),
-(22, 5, 'Teste', 'Teasft', 0, '2024-06-15 10:24:09', 1),
 (23, 5, 'taegts', 'hbfdf', 0, '2024-06-15 10:25:29', 1),
 (24, 5, 'hfdffdgfdasss', 'Tedgesd', 0, '2024-06-15 10:28:21', 1),
 (25, 5, 'Tfddggg', 'Tewssss', 0, '2024-06-15 10:31:39', 1),
@@ -154,7 +150,8 @@ INSERT INTO `threads` (`thread_id`, `board_id`, `title`, `first_post`, `replies`
 (31, 5, 'ttyhhn', 'gggg', 0, '2024-06-15 11:04:18', 1),
 (32, 5, 'Insommmi teste', 'Bruhsomnia', 0, '2024-06-15 11:05:12', 1),
 (33, 5, 'ff kijken', 'Het werkt nu, denk ik', 0, '2024-06-15 12:01:57', 2),
-(34, 5, 'Nog een test', 'Gee', 0, '2024-06-15 12:07:10', 2);
+(34, 5, 'Nog een test', 'Gee', 0, '2024-06-15 12:07:10', 2),
+(35, 5, 'Last', 'So Sad', 1, '2024-06-16 18:13:13', 1);
 
 -- --------------------------------------------------------
 
@@ -173,18 +170,18 @@ CREATE TABLE `thread_tags` (
 
 INSERT INTO `thread_tags` (`thread_id`, `tag_id`) VALUES
 (2, 1),
-(3, 2),
 (9, 2),
 (10, 2),
 (11, 2),
 (12, 2),
 (24, 2),
-(4, 3),
+(35, 4),
 (28, 5),
 (28, 6),
 (34, 6),
 (34, 11),
-(34, 12);
+(34, 12),
+(35, 13);
 
 -- --------------------------------------------------------
 
@@ -208,7 +205,9 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `joined_at`, `role_id`) VALUES
 (1, 'TestMan1', 'Test_Man@hotmail.com', '$2y$10$BwsWY8TuQcGkJ0jJ1iOBvubQSY0m9l33WDhs61mJnBcN3itUSXolq', '2024-02-04 17:38:56', 1),
 (2, 'Normal User', 'normal@hotmail.com', '$2y$10$/o8adMcCz/bBpxePAXUXl.nef41f/WDVeBB5gP0qDbmxmQvmC3m42', '2024-04-08 12:46:31', 1),
-(4, 'test', 'test@gmail.com', '$2y$10$0zKo4plkqe0CeF7txupdIe.PtELH3YFdyIlzfbWJJgymSxNX3scpu', '2024-04-14 07:24:34', 1);
+(4, 'test', 'test@gmail.com', '$2y$10$0zKo4plkqe0CeF7txupdIe.PtELH3YFdyIlzfbWJJgymSxNX3scpu', '2024-04-14 07:24:34', 1),
+(5, 'ad', 'admin@gmail.com', '$2y$10$EdX5YiOlZVGXE53yZ1b3H.jswQ52M2kdrQzzsmDQd3bkmkoAr9nHi', '2024-06-16 07:28:38', 3),
+(6, 'mawd', 'mod@gmail.com', '$2y$10$kvAtHB5Pl.9zB9sqCRjvyejaz.nZULrWXLK0OmghQ3XrEP4tWIoOC', '2024-06-16 11:11:07', 1);
 
 -- --------------------------------------------------------
 
@@ -296,25 +295,25 @@ ALTER TABLE `boards`
 -- AUTO_INCREMENT voor een tabel `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT voor een tabel `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `tag_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `tag_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT voor een tabel `threads`
 --
 ALTER TABLE `threads`
-  MODIFY `thread_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `thread_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT voor een tabel `user_roles`
@@ -330,6 +329,7 @@ ALTER TABLE `user_roles`
 -- Beperkingen voor tabel `posts`
 --
 ALTER TABLE `posts`
+  ADD CONSTRAINT `fk_posts_thread` FOREIGN KEY (`thread_id`) REFERENCES `threads` (`thread_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`thread_id`) REFERENCES `threads` (`thread_id`),
   ADD CONSTRAINT `posts_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
@@ -344,6 +344,7 @@ ALTER TABLE `threads`
 -- Beperkingen voor tabel `thread_tags`
 --
 ALTER TABLE `thread_tags`
+  ADD CONSTRAINT `fk_thread_tags_threads` FOREIGN KEY (`thread_id`) REFERENCES `threads` (`thread_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `thread_tags_ibfk_1` FOREIGN KEY (`thread_id`) REFERENCES `threads` (`thread_id`),
   ADD CONSTRAINT `thread_tags_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`tag_id`);
 
