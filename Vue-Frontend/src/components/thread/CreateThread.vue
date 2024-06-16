@@ -56,7 +56,6 @@ export default {
         alert('Please fill in all fields');
         return false;
       }
-      console.log('Thread Test Passed');
       return true;
     },
     splitTags(tags) {
@@ -89,7 +88,7 @@ export default {
             await axios.post(`/threadtag/${response.data.thread_id}`, tagResponse.data);
           }
       }
-      this.$router.push({ path: `/thread/${response.data.title}.${response.data.thread_id}` });
+      this.$router.push(`/thread/${response.data.title}.${response.data.thread_id}`);
       } catch (error) {
       console.error(error);
       }

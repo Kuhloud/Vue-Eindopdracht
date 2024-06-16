@@ -44,14 +44,13 @@ class BoardRepository extends Repository
                 return $board;
 
         }
-        function insert($board)
+        function insert($board_name, $board_description)
         {
                 $stmt = $this->connection->prepare("INSERT into boards (board_name, board_description) VALUES (:boardName, :boardDescription)");
-                $stmt->bindParam(':boardName', $board->getBoardName());
-                $stmt->bindParam(':boardDescription', $board->getBoardDescription());
+                $stmt->bindParam(':boardName', $board_name);
+                $stmt->bindParam(':boardDescription', $board_description);
 
-                $stmt->execute([$board->getBoardName()]);
-
+                $stmt->execute();
         }
         function updatePostCount($boardId)
         {

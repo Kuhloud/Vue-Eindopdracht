@@ -12,7 +12,7 @@
   <section>
     <post-item v-for="post in posts" :key="post.post_id" :post="post" />
   </section>
-  <section v-if="uStore.isLoggedIn" class="container d-flex justify-content-center align-items-center">
+  <section v-if="store.isLoggedIn" class="container d-flex justify-content-center align-items-center">
     <article class="card shadow p-3 mb-5 bg-body rounded" style="width: 800px;">
       <section class="card-body">
         <form id="newPost" onsubmit="event.preventDefault()">
@@ -36,7 +36,7 @@ export default {
   name: 'ThreadDetails',
   setup() {
     const store = userStore();
-    return { store}
+    return { store }
   },
   components: {
     PostItem,
@@ -101,7 +101,6 @@ export default {
         alert('Please fill in all fields');
         return false;
       }
-      console.log('Post Test Passed');
       return true;
     },
     async newPost() {

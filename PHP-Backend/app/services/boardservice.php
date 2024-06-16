@@ -30,6 +30,6 @@ class BoardService {
     public function insert($board) {
         // retrieve data
         $repository = new BoardRepository();
-        $repository->insert($board);        
+        $repository->insert($board->getBoardName(), $board->getBoardDescription());        
     }
 }

@@ -77,8 +77,6 @@ export default {
         });
     },
 editPost() {
-  console.log(this.post.post_id);
-  console.log(this.newMessage);
   axios
     .put(`/post/${this.post.post_id}/edit`, { message: this.newMessage })
     .then((res) => {
