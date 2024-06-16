@@ -71,7 +71,7 @@ export default {
   methods: {
     async getPosts() {
       try {
-        const response = await axios.get(`/thread/${this.thread_title}`)
+        const response = await axios.get(`/thread/${this.thread_id}`)
         const thread = response.data
         const postResponse = await axios.get(`/thread/${thread.thread_id}/posts`)
         if (Array.isArray(postResponse.data)) {

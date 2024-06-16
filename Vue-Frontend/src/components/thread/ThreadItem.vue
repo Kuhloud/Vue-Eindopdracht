@@ -1,25 +1,25 @@
 <template>
-  <a :href="`/thread/${thread.title}`" class="clickable-card"
-    @click.prevent="goToThread(thread.thread_id, thread.title)">
-    <section class="card">
-      <article class="card-body d-flex justify-content-between align-items-center">
-        <section class="d-flex flex-column align-items-start">
+  <section class="card">
+    <article class="card-body d-flex justify-content-between align-items-center">
+      <section class="d-flex flex-column align-items-start">
+        <a :href="`/thread/${thread.title}`" class="clickable-card"
+          @click.prevent="goToThread(thread.thread_id, thread.title)">
           <h4 class="card-title">{{ thread.title }}</h4>
-          <article v-if="tags != null" class="d-flex ">
-
-            <tag-item v-for="tag in tags" :key="tag.tag_id" :tag="tag" />
-          </article>
-        </section>
-        <section class="d-flex">
-          <dl class="d-flex flex-column align-items-center border-start border-end border-secondary">
-            <dt>{{ thread.replies }}</dt>
-            <dd><small class="card-subtitle mb-2 text-muted">Replies</small></dd>
-          </dl>
-        </section>
-      </article>
-      <button v-if="store.isStaff" type="submit" @click="deleteThread" class="btn btn-primary">Delete Thread</button>
-    </section>
-  </a>
+        </a>
+        <article v-if="tags != null" class="d-flex ">
+          <tag-item v-for="tag in tags" :key="tag.tag_id" :tag="tag" />
+        </article>
+        <button v-if="store.isStaff" type="submit" @click="deleteThread" class="btn btn-primary margin-right">Delete
+          Thread</button>
+      </section>
+      <section class="d-flex">
+        <dl class="d-flex flex-column align-items-center border-start border-end border-secondary">
+          <dt>{{ thread.replies }}</dt>
+          <dd><small class="card-subtitle mb-2 text-muted">Replies</small></dd>
+        </dl>
+      </section>
+    </article>
+  </section>
 </template>
 <script>
 import axios from '../../axios-auth'
@@ -69,7 +69,7 @@ export default {
 </script>
 <style scoped>
 a {
-  text-decoration: none;
+  text-decoration: underline;
   color: #E30380;
 }
 

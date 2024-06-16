@@ -71,8 +71,8 @@ export default {
     deleteThread(thread_id) {
       axios
         .delete(`/thread/${thread_id}/delete`)
-        .then(() => {
-          console.log('Post deleted');
+        .then((res) => {
+          console.log(res);
         })
         .catch((error) => {
           console.error(error);

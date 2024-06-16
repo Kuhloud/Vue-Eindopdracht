@@ -21,12 +21,6 @@ class ThreadService {
         $thread = $repository->getThreadById($threadId);
         return $thread;
     }
-    public function getThreadByTitle($title) {
-        // retrieve data
-        $repository = new ThreadRepository();
-        $threads = $repository->getThreadByTitle($title);
-        return $threads;
-    }
 
     public function insert($thread) {
         // retrieve data
@@ -38,5 +32,10 @@ class ThreadService {
         // retrieve data
         $repository = new ThreadRepository();
         return $repository->updateReplies($threadId);
+    }
+    public function deleteThread($threadId) {
+        // retrieve data
+        $repository = new ThreadRepository();
+        return $repository->deleteThread($threadId);
     }
 }

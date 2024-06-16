@@ -24,7 +24,7 @@
         </section>
         <section class="d-flex" v-else>
         <li class="nav-item">
-          <router-link to="/" class="nav-link" active-class="active">Welcome, {{ store.getUsername }}</router-link>
+          <router-link to="/" class="nav-link" active-class="active">Welkom, {{ store.getUsername }}</router-link>
         </li>
         <li class="nav-item">
           <a to="/logout" @click.prevent="logout" class="nav-link" active-class="active">Logout</a>

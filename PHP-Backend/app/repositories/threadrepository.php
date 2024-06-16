@@ -32,18 +32,6 @@ class ThreadRepository extends Repository
                 return $threads;
 
         }
-        function getThreadByTitle($title)
-        {
-
-                $stmt = $this->connection->prepare("SELECT * FROM threads WHERE title = :title");
-                $stmt->bindParam(':title', $title);
-                $stmt->execute();
-
-                $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\Thread');
-                $threads = $stmt->fetch();
-
-                return $threads;
-        }
         function getThreadById($threadId)
         {
 
@@ -89,5 +77,11 @@ class ThreadRepository extends Repository
                 $stmt->bindParam(':replies', $totalReplies);
                 $stmt->execute();
                 return $totalReplies;
+        }
+        function deleteThread($threadId)
+        {
+                $stmt = $this->connection->prepare("DELETE FROM threads WHERE thread_id = :thread_id");
+                $stmt->bindParam(':thread_id', $threadId);
+                $stmt->execute();
         }
     }

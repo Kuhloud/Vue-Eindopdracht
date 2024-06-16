@@ -5,9 +5,9 @@
         <header class="col-12">
           <h2>Home</h2>
           <p>
-            Welcome to the Inholland Forum! This is the place where you can find all the information
-            you need about your study. You can also ask questions and help other students with their
-            questions. You can also find some memes here.
+            Welkom op het Inholland Forum! Dit is de plek waar je alle informatie kunt vinden die je nodig hebt over je
+            studie. Je kunt hier ook vragen stellen en andere studenten helpen met hun vragen. Daarnaast kun je hier ook
+            enkele memes vinden.
           </p>
         </header>
       </article>
@@ -21,4 +21,9 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+body {
+  background-color: #FFFFFF;
+  color: #000000;
+}
+</style>

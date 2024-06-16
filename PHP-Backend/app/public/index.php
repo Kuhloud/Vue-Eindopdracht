@@ -26,9 +26,9 @@ $router->put('/board/(\d+)/totalmessages', 'BoardController@updatePostCount');
 // routes for the thread endpoint
 $router->get('/board/([^/]+)/threads', 'ThreadController@getThreadsByBoardName');
 $router->post('/thread', 'ThreadController@createThread');
-$router->get('/thread/([^/]+)', 'ThreadController@getThreadByTitle');
+$router->get('/thread/(\d+)', 'ThreadController@getThreadById');
 $router->put('/thread/(\d+)/totalreplies', 'ThreadController@updatePostCount');
-$router->delete('/thread/(\d+)/delete', 'PostController@deleteThread');
+$router->delete('/thread/(\d+)/delete', 'ThreadController@deleteThread');
 
 // routes for the tag endpoint
 $router->post('/tag', 'TagController@addTag');
